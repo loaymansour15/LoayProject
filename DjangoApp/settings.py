@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myclient',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'DjangoApp.wsgi.application'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # Database

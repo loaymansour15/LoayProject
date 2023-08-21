@@ -16,4 +16,6 @@ class MyLogoutView(LogoutView):
     next_page = '/login/'
 
 def home(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+
+    context = {}
+    return render(request, 'home.html', context)

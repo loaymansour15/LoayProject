@@ -1,4 +1,4 @@
-{% extends "appC.html" %}
+{% extends "app.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -21,7 +21,7 @@
                 <h4> <b> عدد التقييمات علي المنصة  </b> </h4>
               </div>
               <div class="card-body">
-                <h2 class="card-title"> <span class="badge badge-danger">{{ all_reports }}</span> </h2>
+                <h2 class="card-title"> <span class="badge badge-danger">0</span> </h2>
               </div>
             </div>
 
@@ -34,7 +34,7 @@
                 <h4> <b>   شركاء النجاح  </b> </h4>
               </div>
               <div class="card-body">
-                <h2 class="card-title"> <span class="badge badge-primary">{{ brands }}</span> </h2>
+                <h2 class="card-title"> <span class="badge badge-primary">0</span> </h2>
               </div>
             </div>
 
@@ -47,7 +47,7 @@
                 <h4> <b>  مرتجعات تم تجنبها </b> </h4>
               </div>
               <div class="card-body">
-                <h2 class="card-title"> <span class="badge badge-success">{{ counts }}</span> </h2>
+                <h2 class="card-title"> <span class="badge badge-success">0</span> </h2>
               </div>
             </div>
 
@@ -63,12 +63,12 @@
                 <h4 class="card-header"><b> إنضم لشركاء النجاح  </b></h4>
                 <div class="card-body">
                   
-                  <a href="{% url 'registerC' %}" class="btn btn-primary btn-lg btn-block">
+                  <a href="" class="btn btn-primary btn-lg btn-block">
                     
                     <b> إنشاء حساب  </b></a>
 
                     <hr>
-                    <a href="{% url 'loginURLC' %}" style="font-size: 19px;"> <b>  لدي حساب بالفعل </b> </a>
+                    <a href="" style="font-size: 19px;"> <b>  لدي حساب بالفعل </b> </a>
 
                 </div>
               </div>

@@ -1,7 +1,7 @@
 
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'homeURLC' %}" style="font-family:'Times New Roman', Times, serif; font-size: 22px;">
+    <a class="navbar-brand" href="{% url 'homeURL' %}" style="font-family:'Times New Roman', Times, serif; font-size: 22px;">
         <!-- <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""> -->
         My Client
       </a>
@@ -13,22 +13,22 @@
       <ul class="navbar-nav mr-auto">
         {% if not user.is_authenticated %}
         <li class="nav-item active">
-          <a class="nav-link text-right" href="{% url 'homeURLC' %}">الرئيسية <span class="sr-only">(current)</span></a>
+          <a class="nav-link text-right" href="{% url 'homeURL' %}">الرئيسية <span class="sr-only">(current)</span></a>
         </li>
         {% endif %}
 
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link text-right" href="{% url 'dashboardC' %}"> لوحة التحكم </a>
+          <a class="nav-link text-right" href=""> لوحة التحكم </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link text-right" href="{% url 'myWalletC' %}">  محفظتي  </a>
+          <a class="nav-link text-right" href="">  محفظتي  </a>
         </li>
         {% endif %}
 
         <li class="nav-item">
-          <a class="nav-link text-right" href="{% url 'pricingC' %}">باقات الشحن </a>
+          <a class="nav-link text-right" href="">باقات الشحن </a>
         </li>
         
         {% if user.is_authenticated %}
@@ -38,9 +38,9 @@
             الخدمات
           </a>
           <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'add_report' %}">اضف تقييم</a>
+            <a class="dropdown-item" href="">اضف تقييم</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'search_for_client' %}"> إبحث عن عميل </a>
+            <a class="dropdown-item" href=""> إبحث عن عميل </a>
           </div>
         </li>
 
@@ -50,9 +50,9 @@
             {{ user.username|truncatechars:15 }}
           </a>
           <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'personal_info' %}">البيانات الشخصية</a>
-            <a class="dropdown-item" href="{% url 'profile' %}"> بيانات التواصل</a>
-            <a class="dropdown-item" href="{% url 'change_password' %}"> تغيير كلمة المرور </a>
+            <a class="dropdown-item" href="">البيانات الشخصية</a>
+            <a class="dropdown-item" href=""> بيانات التواصل</a>
+            <a class="dropdown-item" href=""> تغيير كلمة المرور </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
           </div>
@@ -60,10 +60,10 @@
         
         {% else %}
         <li class="nav-item text-right">
-          <a class="nav-link" href="{% url 'loginURLC' %}">تسجيل دخول</a> 
+          <a class="nav-link" href="">تسجيل دخول</a> 
         </li>
         <li class="nav-item text-right">
-          <a class="nav-link" href="{% url 'registerC' %}">  إنشاء حساب</a> 
+          <a class="nav-link" href="">  إنشاء حساب</a> 
         </li>
         {% endif %}
       </ul>
