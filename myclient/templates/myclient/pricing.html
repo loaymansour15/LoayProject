@@ -1,0 +1,78 @@
+{% extends "appC.html" %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"> باقات الشحن </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container mt-4 text-right" >
+    
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4"> باقات الشحن </h1>
+        <p class="lead"> يمكنك الآن شحن محفظتك والتمتع بجميع خدماتنا بأقل الأسعار .. جرب الآن</p>
+      </div>
+
+    <div class="card-deck mb-3 text-center">
+
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">{{pk3.name}}</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">  <b> <small class="text-muted" style="font-size: 0px;"> فقط </small> {{pk3.value}} {{pk3.currency}}</b> </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                <li> تعطيك إجمالي  {{pk3.points}} نقطه</li>
+                <li> {% if pk3.hint %} {{ pk3.hint }} {% else %} .. {% endif %}</li>
+  
+              </ul>
+              <a href="{% url 'subscribeC' pk3.id %}" type="button" class="btn btn-lg btn-block btn-primary"> MyClient خليك   </a>
+            </div>
+          </div>
+
+          <div class="card mb-4 box-shadow">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">{{pk2.name}}</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">  <b> <small class="text-muted" style="font-size: 0px;"> فقط </small> {{pk2.value}} {{pk2.currency}}</b> </h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                <li> تعطيك إجمالي  {{pk2.points}} نقطه</li>
+                <li> {% if pk2.hint %} {{ pk2.hint }} {% else %} .. {% endif %}</li>
+  
+              </ul>
+              <a href="{% url 'subscribeC' pk2.id %}" type="button" class="btn btn-lg btn-block btn-primary">  زود رصيدك  </a>
+            </div>
+          </div>
+
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{pk1.name}}</h4>
+          </div>
+          <div class="card-body" >
+            <h1 class="card-title pricing-card-title">  <b> <small class="text-muted" style="font-size: 0px;"> فقط </small> {{pk1.value}} {{pk1.currency}}</b> </h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li> تعطيك إجمالي  {{pk1.points}} نقطه</li>
+              <li> {% if pk1.hint %} {{ pk1.hint }} {% else %} .. {% endif %}</li>
+
+            </ul>
+            <a  href="{% url 'subscribeC' pk1.id %}" type="button" class="btn btn-lg btn-block btn-outline-primary">إشحن محفظتك</a>
+          </div>
+        </div>
+
+      </div>
+
+</div>
+
+
+{% endblock %}

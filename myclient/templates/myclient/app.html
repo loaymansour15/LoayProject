@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="Loay Mansour" content="Search Engine">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Client </title>
+
+  {% load static %}
+  <!--<link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/ico" sizes="16x16">-->
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link href="{% static 'fontsX/fontawesomeX/css/all.css' %}" rel="stylesheet">
+  <link href="{% static 'css/myCssX.css' %}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+  <!-- Header Section Start -->
+  {% include "header_C.html" %}
+  <!-- Header Section End -->
+
+  <div class="container-fluid" style="margin-bottom: 20px; margin-top: 20px;">
+
+    {% include "messages_C.html" %}
+
+    <a href="https://telegram.me/MyClientSupport" class="t-float" target="_blank">
+      <h2> <i class="fa-brands fa-telegram fa-xl"></i> </h2>
+    </a>
+
+    <!-- Body Section Start -->
+    {% block content %}
+
+
+    {% endblock content %}
+    <!-- Body Section End -->
+
+    <!-- Modals -->
+    {% include "modals_C.html" %}
+    {% include "toasts_C.html" %}
+
+  </div>
+
+
+
+  <!-- All js here -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="{% static 'js/myJs.js' %}"></script>
+  <script src="{% static 'js/my_ajax.js' %}"></script>
+
+</body>
+
+<footer class="d-flex justify-content-center mt-auto">
+  {% include 'footer_C.html' %}
+</footer>
+
+</html>

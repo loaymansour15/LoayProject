@@ -1,0 +1,107 @@
+{% extends "appC.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+<div class="row text-center">
+    <div class="col-md-8 offset-md-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page">  إنشاء حساب </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-8 offset-md-2 text-center">
+        <h1> <b>  إنشاء حساب </b> </h1>
+        <hr>
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-12">
+        <form method="POST" action="{% url 'registerC' %}">
+            {% csrf_token %}
+            {{ form2.media.js }}
+            <div class="row text-center">
+                <div class="col-md-4 offset-md-2" dir="rtl">
+                    
+                    <h3> <b> بيانات الحساب  </b></h3>
+                    <hr>
+                    {{form|crispy}}
+                </div>
+                <div class="col-md-4" dir="rtl">
+                    {{selform|crispy}}
+                    
+                    <script>
+                        $(document).ready(
+                            function(){
+                                $("#form2").hide();
+                                $("#form3").hide();
+                                $("#id_types").on("change", function(){  
+                                    if ($(this).val()=="براند"){
+                                        $("#form3").hide();
+                                        $("#form2").show();
+                                    }
+                                    else if ($(this).val()=="شركة شحن"){
+                                        $("#form2").hide();
+                                        $("#form3").show();
+                                    }else{
+                                        $("#form2").hide();
+                                        $("#form3").hide();
+                                    }
+                                        
+                                });
+                            }
+                        ); 
+                    </script>
+                    
+                    <div id="form2">
+                        <h3> <b> بيانات البراند  </b></h3>
+                        <hr>
+                        {{form2|crispy}} 
+                    </div>
+
+                    <div id="form3">
+                        <h3> <b> بيانات الشركة  </b></h3>
+                        <hr>
+                        
+                    </div>
+                    
+                </div>
+                <br>
+                
+                <div class="col-md-8 offset-md-2">
+                    <button type="submit" class="btn-primary btn-lg btn-block" >  إنشاء الحساب </button>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row text-right">
+                <div class="col-md-8 offset-md-2">
+                    {{privform.priv_check_box}} <a href="{% url 'privacypolC' %}" target="_blank"> {{privform.priv_check_box.label}} </a> 
+                    <hr>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-2 offset-md-8 text-right">
+        <a href="{% url 'loginURLC' %}" style="font-size: 18px;"> لدي حساب بالفعل</a>
+    </div>
+</div>
+
+
+{% endblock content %}

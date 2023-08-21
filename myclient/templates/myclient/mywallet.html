@@ -1,0 +1,80 @@
+{% extends "appC.html" %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"> محفظتي </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container mt-4 text-center" >
+    
+    <h1 class="text-center"> <b> محفظتي </b> </h1>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+
+            <div class="card">
+              <div class="card-header">
+                <h2> <b> <span class="badge badge-secondary" style="font-size: 15px;">بالنقاط</span> رصيدي</b> </h2>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">  <span class="badge badge-primary" style="font-size: 35px;" > {{ wallet.points }} </span>  </h3>
+              </div>
+            </div>
+
+          </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
+
+            <table class="table table-striped" style="max-width: none;">
+
+                <thead>
+                    <tr>
+                      <th scope="col-md-3"> <b> التاريخ </b></th>
+                      <th scope="col-md-3"> <b> نوع العمليه </b></th>
+                    </tr>
+                  </thead>
+
+                <tbody>
+                {% if trans %}
+                    {% for t in trans %}
+                        <tr>
+                            <td style="max-width: 100%; white-space: nowrap;"><b> {{t.date_created}} </b></td>
+                            {% if t.service_type %}
+                            <td style="max-width: 100%; white-space: nowrap;"> <b> تم إستخدام خدمة  <i style="color: red;"> &nbsp;{{ t.service_type }}</i> {% if t.service_option == '+' %} وتم إضافة {%else%} وتم خصم {%endif %} {{t.points}}   {{t.unit_name}}  </b></td>
+                            {% else %}
+                                <td style="max-width: 100%; white-space: nowrap;"> <b> تم الإشتراك في باقة <i style="color: red;"> &nbsp;{{ t.package_type }}</i> بمبلغ {{t.currency}} {{t.value}}  وتم إضافة  {{t.points}}   {{t.unit_name}}   </b></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <td style="max-width: 100%; white-space: nowrap;"><b>لا يوجد عمليات </b></td>
+                    <td style="max-width: 100%; white-space: nowrap;"> <b>  </b></td>
+                {% endif %}
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "appC.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+    <br>
+
+    <div class="jumbotron vertical-center text-center">
+
+        <h1> <b> My Client</b></h1>
+        <hr>
+
+        <div class="row text-center">
+          <div class="col-md-4">
+
+            <div class="card">
+              <div class="card-header">
+                <h4> <b> عدد التقييمات علي المنصة  </b> </h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title"> <span class="badge badge-danger">{{ all_reports }}</span> </h2>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="card">
+              <div class="card-header">
+                <h4> <b>   شركاء النجاح  </b> </h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title"> <span class="badge badge-primary">{{ brands }}</span> </h2>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="card">
+              <div class="card-header">
+                <h4> <b>  مرتجعات تم تجنبها </b> </h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title"> <span class="badge badge-success">{{ counts }}</span> </h2>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <br>
+        <div class="row text-center">
+          <div class="col-md-4 offset-md-4">
+
+              <div class="card" dir="rtl">
+                <h4 class="card-header"><b> إنضم لشركاء النجاح  </b></h4>
+                <div class="card-body">
+                  
+                  <a href="{% url 'registerC' %}" class="btn btn-primary btn-lg btn-block">
+                    
+                    <b> إنشاء حساب  </b></a>
+
+                    <hr>
+                    <a href="{% url 'loginURLC' %}" style="font-size: 19px;"> <b>  لدي حساب بالفعل </b> </a>
+
+                </div>
+              </div>
+            
+
+          </div>
+        </div>
+    
+  </div>
+
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'appC.html' %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row text-center">
+    <div class="col-md-6 offset-md-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">لوحة التحكم </a></li>
+              <li class="breadcrumb-item active" aria-current="page"> أضف تقييم لعميلك </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3">
+
+        <h3> أضف تقييم لعميلك</h3>
+        <hr>
+        <form method="POST" action="{% url 'add_report' %}" dir="rtl">
+            {% csrf_token %}
+            
+            {{form1|crispy}}
+            {{form2|crispy}}
+            
+            <button type="submit" class="btn-primary btn-lg btn-block" > أضف </button>
+        </form>
+        <hr>
+        
+    </div>
+</div>
+
+{% endblock %}

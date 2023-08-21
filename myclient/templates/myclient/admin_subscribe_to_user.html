@@ -1,0 +1,44 @@
+{% extends "appC.html" %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"> <a href="{% url 'pricingC' %}"> باقات الشحن   </a> </li>
+              <li class="breadcrumb-item active" aria-current="page"> شحن الباقة  </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container mt-4 text-right" >
+    
+    <h1 class="text-center"> للأدمن فقط</h1>
+    
+    <div class="row text-center" >
+
+        <div class="col-md-6 offset-md-3">
+            <form method="POST" action="{% url 'subscribeC' id %}">
+                {% csrf_token %}
+
+                <hr>
+                {{form|crispy}} 
+                <hr>
+                <button type="submit" class="btn-primary btn-lg btn-block" >  تأكيد الإشتراك للمستخدم </button>
+
+            </form>
+        </div>
+    
+    </div>
+    
+
+</div>
+
+
+{% endblock %}

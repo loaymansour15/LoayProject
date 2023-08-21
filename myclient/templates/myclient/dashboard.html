@@ -1,0 +1,94 @@
+{% extends "appC.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row text-center">
+  <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">الرئيسية</a></li>
+            <li class="breadcrumb-item active" aria-current="page">  لوحة التحكم </li>
+          </ol>
+      </nav>
+  </div>
+</div>
+
+    <br>
+
+    <div class="jumbotron vertical-center text-center">
+
+        <h1> <b> لوحة التحكم </b></h1>
+        <hr>
+
+        <div class="row text-center">
+          <div class="col-md-4">
+
+            <div class="card">
+              <div class="card-header">
+                <h4> <b> عدد التقييمات علي المنصة  </b> </h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title"> <span class="badge badge-danger">{{ all_reports }}</span> </h2>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="card">
+              <div class="card-header">
+                <h4> <b>   تقييماتي  </b> </h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title"> <span class="badge badge-primary">{{ reports }}</span> </h2>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+
+            <div class="card">
+              <div class="card-header">
+                <h4> <b>  مرتجعات تجنبتها </b> </h4>
+              </div>
+              <div class="card-body">
+                <h2 class="card-title"> <span class="badge badge-success">{{ counts }}</span> </h2>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+<br>
+
+        <div class="row text-center">
+            <div class="col-sm-6">
+              <div class="card" dir="rtl">
+                <h4 class="card-header"><b> اضف تقييم </b></h4>
+                <div class="card-body">
+                  
+                  <a href="{% url 'add_report' %}" class="btn btn-primary btn-lg btn-block " > 
+                    اضف تقييم   </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card" dir="rtl">
+                <h4 class="card-header"><b> إبحث عن عميل </b></h4>
+                <div class="card-body">
+                  
+                  <a href="{% url 'search_for_client' %}" class="btn btn-success btn-lg btn-block">
+                    
+                    إبحث عن عميل </a>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+    </div>
+
+{% endblock content %}

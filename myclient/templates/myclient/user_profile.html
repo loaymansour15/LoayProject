@@ -1,0 +1,37 @@
+{% extends 'appC.html' %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-4 text-right" >
+
+    <div class="row text-center">
+        <div class="col-md-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">الرئيسية</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">  بيانات التواصل  </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <h2 class="text-center" dir="rtl">اهلا {{ request.user.username|truncatechars:15 }}!</h2>
+    <hr>
+
+    <h3 dir="rtl"> بيانات التواصل :</h3>
+    <form method="post" action="{% url 'profile' %}" dir="rtl">
+        {% csrf_token %}
+        {{ profile.media.js }}
+
+        {{ profile|crispy }}
+        <button class="btn btn-primary btn-lg btn-block" type="submit">حفظ</button>
+    </form>
+
+   
+</div>
+  
+{% endblock %}
+
