@@ -13,8 +13,8 @@ from django.contrib import messages
 from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
-import pyarabic.araby as araby
-import pyarabic.number as number
+#import pyarabic.araby as araby
+#import pyarabic.number as number
 from django.db.models import Q
 
 # Create your views here.
