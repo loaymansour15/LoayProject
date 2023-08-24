@@ -1,0 +1,95 @@
+html {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+}
+
+
+.form-group label {
+text-align: right;
+}
+.form-group input {
+text-align: right;
+}
+.form-group select {
+text-align-last: right;
+direction: rtl;
+}
+
+.logo{
+    object-fit: cover;
+}
+
+.pagination {
+    padding: 5px;
+}
+
+
+#butHeight {
+    height: 150px;
+}
+
+#butHeight2 {
+    height: 100px;
+}
+
+a { 
+    color: inherit; 
+    text-decoration: none;
+} 
+
+a:hover {
+    text-decoration: none;
+}
+
+#horiCss > .row {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#horiCss > .row > .col-xs-4 {
+    display: inline-block;
+    float: none;
+}
+
+.spaces {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.spaces1 {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.hide {
+    display: none;
+}
+
+
+.t-float{
+	position:fixed;
+	
+	bottom:20px;
+    z-index: 10;
+}
+
+.my-float{
+	margin-top: 22px;
+}
+
+.vertical-center {
+    min-height: 70%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 70vh; /* These two lines are counted as one :-)       */
+  
+  }
