@@ -25,7 +25,7 @@ urlpatterns = [
     path('myclient/', include('myclient.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
-    #path('chaining/', include('smart_selects.urls')),
+    path('chaining/', include('smart_selects.urls')),
 
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

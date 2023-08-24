@@ -1,6 +1,4 @@
-
-
-{% extends "appC.html" %}
+{% extends "app.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -11,7 +9,7 @@
     <div class="col-md-6 offset-md-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURLC' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
               <li class="breadcrumb-item active" aria-current="page">تسجيل دخول</li>
             </ol>
         </nav>
@@ -30,7 +28,7 @@
 <div class="row text-center" >
 
     <div class="col-md-6 offset-md-3">
-        <form method="POST" action="{% url 'loginURLC' %}" dir="rtl">
+        <form method="POST" action="{% url 'loginURL' %}" dir="rtl">
             {% csrf_token %}
             
             {{form|crispy}}
@@ -41,7 +39,7 @@
         
     </div>
     <div class="col-md-2 offset-md-7 text-right">
-        <a href="{% url 'resetPasswordC' %}" style="font-size: 18px;"> نسيت كلمة المرور </a>
+        <a href="{% url 'resetPassword' %}" style="font-size: 18px;"> نسيت كلمة المرور </a>
        
     </div>
 
@@ -49,7 +47,7 @@
     <br>
     
     <div class="col-md-2 offset-md-7 text-right">
-        <a href="{% url 'registerC' %}" style="font-size: 18px;"> ليس لدي حساب</a>
+        <a href="" style="font-size: 18px;"> ليس لدي حساب</a>
     </div>
     
 

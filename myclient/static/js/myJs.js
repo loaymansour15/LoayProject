@@ -2,16 +2,16 @@
 $(document).ready(function(){
 
 
-    $('.delete-property').on('click', function(event) {
-        event.preventDefault();
-        var url = $(this).attr('href');
-        $('#confirm-delete-modal').modal('show');
-        $('#confirm-delete-btn').on('click', function() {
-            window.location.href = url;
-        });
-    });
+    //$('.delete-property').on('click', function(event) {
+      //  event.preventDefault();
+        //var url = $(this).attr('href');
+        //$('#confirm-delete-modal').modal('show');
+        //$('#confirm-delete-btn').on('click', function() {
+          //  window.location.href = url;
+        //});
+    //});
 
-    //alert("hello");
+    //alert("hello loay");
 
 
     //$.ajax({
@@ -27,17 +27,7 @@ $(document).ready(function(){
 });
 
 
-function showdeleteAqarPostModal(){
+//function showdeleteAqarPostModal(){
     
-    $('#deletepostModal').modal('show');
-}
-
-function showdeleteCarPostModal(){
-    
-    $('#deletecarpostModal').modal('show');
-}
-
-function showdeleteAccountModal(){
-    
-    $('#deleteAccountModal').modal('show');
-}
+  //  $('#deletepostModal').modal('show');
+//}

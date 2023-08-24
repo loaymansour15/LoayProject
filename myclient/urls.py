@@ -24,6 +24,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.home, name='homeURL'),
 
+    path('login/', views.login_view, name='loginURL'),
     path('logout/', MyLogoutView.as_view(), name='logout'),
 
     path('accounts/password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset_form.html'), name="resetPassword"),
