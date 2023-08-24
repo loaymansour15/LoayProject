@@ -73,8 +73,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjangoApp.wsgi.application'
 
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# crispy form
+CRISPY_TEMPLATE_PACK = 'uni_form'
 
 
 # Database
