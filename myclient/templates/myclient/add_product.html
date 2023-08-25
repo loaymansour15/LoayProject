@@ -1,12 +1,14 @@
 {% extends "app.html" %}
 
 {% load crispy_forms_tags %}
+{% load static %}
+
 
 {% block content %}
 
 
 <div class="row text-center">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
@@ -21,8 +23,8 @@
 <div class="row text-center">
 
     <div class="col-md-6 offset-md-3 text-center">
-        <h1> <b> أضف منتج </b> </h1>
-        <hr>
+        <h1> <b> أضف منتج جديد </b> </h1>
+        <hr><br>
     </div>
 </div>
 
@@ -32,40 +34,83 @@
         <form id="addProdUnit" method="POST" action="" dir="rtl">
             {% csrf_token %}
             
+            {{form1|crispy}}
+            <div id="message1success" class="alert alert-success" role="alert">
+                
+            </div>
+
+            <div id="message1error" class="alert alert-danger" role="alert">
+                
+            </div>          
+            
+            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
+        </form>
+        <hr>
+        
+    </div>
+
+    <div class="col-md-4">
+        <form id="addProdVariant" method="POST" action="" dir="rtl">
+            {% csrf_token %}
+            
+            {{form2|crispy}}
+            <div id="message2success" class="alert alert-success" role="alert">
+                
+            </div>
+
+            <div id="message2error" class="alert alert-danger" role="alert">
+                
+            </div>     
+            
+            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
+        </form>
+        <hr>
+        
+    </div>
+
+    <div class="col-md-4">
+        <form id="addProdVarOptions" method="POST" action="" dir="rtl">
+            {% csrf_token %}
+            
+            {{form3|crispy}}
+            <div id="message3success" class="alert alert-success" role="alert">
+                
+            </div>
+
+            <div id="message3error" class="alert alert-danger" role="alert">
+                
+            </div>     
+            
+            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
+        </form>
+        <hr>
+        
+    </div>
+
+    
+    
+
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-6 offset-md-3 text-center">
+        <h2> <b>   بيانات المنتج الجديد </b> </h2>
+        <hr><br>
+    </div>
+
+    <div class="col-md-6 offset-md-3">
+        <form id="addProd" method="POST" action="{% url 'addProduct' %}" dir="rtl">
+            {% csrf_token %}
+            {{ form.media.js }}
+            
             {{form|crispy}}
             
             <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
         </form>
         <hr>
         
-    </div>
-
-    <div class="col-md-4">
-        <form method="POST" action="" dir="rtl">
-            {% csrf_token %}
-            
-            2
-            
-            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
-        </form>
-        <hr>
-        
-    </div>
-
-    <div class="col-md-4">
-        <form method="POST" action="" dir="rtl">
-            {% csrf_token %}
-            
-            3
-            
-            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
-        </form>
-        <hr>
-        
-    </div>
-
-    
-    
+    </div>    
 
 </div>
 

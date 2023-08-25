@@ -29,6 +29,8 @@ urlpatterns = [
 
     path('add_product/', views.add_product, name='addProduct'),
     path('add_product_unit/', views.add_product_unit, name='addProductUnit'),
+    path('add_product_variant/', views.add_product_variant, name='addProductVariant'),
+    path('add_product_variant_options/', views.add_product_var_options, name='addProductVariantOptions'),
 
     path('accounts/password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset_form.html'), name="resetPassword"),
     path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),),

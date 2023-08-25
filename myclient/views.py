@@ -86,9 +86,24 @@ def home(request):
 # Store Functions
 @login_required
 def add_product(request):
+
+    if request.method == 'POST':
+        form = AddProduct_Form(request.POST)
+        if form.is_valid():
+            newForm = form.save(commit=False)
+            newForm.user = request.user
+            newForm.save()
+            messages.success(request, 'تم تسجيل المنتج بنجاح')
+        else:
+            messages.error(request, ' برجاء إضافه البيانات بشكل صحيح ')
+    else: # GET
+        form = AddProduct_Form()
+
+    form1 = AddProductUnit_Form()
+    form2 = AddProductVariant_Form()
+    form3 = AddProductVariantOptions_Form()
     
-    form = AddProductUnit_Form()
-    context = {'form':form}
+    context = {'form1':form1, 'form2':form2, 'form3': form3, 'form':form}
 
     return render(request, 'add_product.html', context)
 
@@ -101,6 +116,63 @@ def add_product_unit(request):
         form = AddProductUnit_Form(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('name')
+
+            new_unit = Product_Unit.objects.filter(name=name, user=request.user).first()
+            exist = None
+            if not new_unit:
+                new_unit = Product_Unit(name=name, user=request.user)
+                new_unit.save()
+                exist = False
+            else:
+                exist = True
+                
+                #messages.success(request, f'{name}! تم إضافه الوحده ')
+                #messages.error(request, f'   {name}! تم إضافتها مسبقا ')
         
-            data = {'p_unit': name}
+            data = {'p_unit': name, 'exist':exist, 'option_text':new_unit.name, 'option_value':new_unit.id}
             return JsonResponse(data)
+
+@login_required
+def add_product_variant(request):
+    if request.method == 'POST':
+        form = AddProductVariant_Form(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+
+            new_variant = Product_Variant.objects.filter(name=name, user=request.user).first()
+            exist = None
+            if not new_variant:
+                new_variant = Product_Variant(name=name, user=request.user)
+                new_variant.save()
+                exist = False
+            else:
+                exist = True
+                
+                #messages.success(request, f'{name}! تم إضافه الوحده ')
+                #messages.error(request, f'   {name}! تم إضافتها مسبقا ')
+        
+            data = {'p_variant': name, 'exist':exist, 'option_text':new_variant.name, 'option_value':new_variant.id}
+            return JsonResponse(data)
+
+@login_required
+def add_product_var_options(request):
+    if request.method == 'POST':
+        form = AddProductVariantOptions_Form(request.POST)
+        if form.is_valid():
+            prod_variant = form.cleaned_data.get('prod_variant')
+            name = form.cleaned_data.get('name')
+            prod_var = Product_Variant.objects.filter(user=request.user, name=prod_variant).first()
+            if prod_var:
+                new_var_option = Product_Variant_Options.objects.filter(name=name, prod_variant=prod_var).first()
+                exist = None
+                if not new_var_option:
+                    new_var_option = Product_Variant_Options(name=name, prod_variant=prod_var)
+                    new_var_option.save()
+                    exist = False
+                else:
+                    exist = True
+            
+                data = {'p_variant': name, 'exist':exist, 'option_text':new_var_option.name, 'option_value':new_var_option.id}
+                return JsonResponse(data)
+            else:
+                pass
