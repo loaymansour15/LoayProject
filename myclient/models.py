@@ -46,7 +46,7 @@ class City(models.Model):
         return self.name
 
 
-class Product_Category(models.Model):
+class Bussiness_Speciality(models.Model):
     name = models.CharField(max_length=100)
 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
@@ -60,7 +60,7 @@ class BrandProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     website_link = models.CharField(max_length=100, verbose_name=" لينك الويب سايت", blank=True, null=True)
     scoial_link = models.CharField(max_length=80, verbose_name=" لينك السوشيال ميديا الرئيسية", blank=True, null=True)
-    product_category = models.ForeignKey("Product_Category", on_delete=models.CASCADE, verbose_name="  فئة منتجاتك", blank=True, null=True)
+    business_speciality = models.ForeignKey("Bussiness_Speciality", on_delete=models.CASCADE, verbose_name="  تخصص البراند ", blank=True, null=True)
     #est_no_of_orders_per_month = models.IntegerField(verbose_name="تقريبا كم عدد الأوردرات في الشهر", validators=[MinValueValidator(0),MaxValueValidator(100000)])
     country_c = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name="الدولة", blank=True, null=True)
     state_c = ChainedForeignKey(State, chained_field="country_c", chained_model_field="country", show_all=False, auto_choose=True, sort=True, verbose_name="المحافظة", blank=True, null=True)
@@ -83,3 +83,12 @@ class BrandProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Product_Unit(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, verbose_name="إسم الوحده")
+
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
+
+    def __str__(self):
+        return self.name

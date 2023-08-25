@@ -1,28 +1,24 @@
 
-// update archive button title
-function archive_func(post_id, post_type){
+// add product unit
+$(document).ready(function(){
     
-    $.ajax({
-        url: '/archive/',
-        type: 'GET',
-        data: { "post_id": JSON.stringify(post_id), 'post_type': JSON.stringify(post_type) },
-        dataType: 'json',
-
-        success: function (data) {
-            if (data.result == true){
-                $("#archiveB").text("تمت الإضافه للأرشيف");
-                $('#archiveB').removeClass('btn btn-outline-secondary btn-block');
-                $('#archiveB').addClass('btn btn-outline-success btn-block');
-            } else {
-                $("#archiveB").text("أضف إلي الأرشيف؟");
-                $('#archiveB').removeClass('btn btn-outline-success btn-block');
-                $('#archiveB').addClass('btn btn-outline-secondary btn-block');
+    var frm = $('#addProdUnit');
+    frm.submit(function () {
+        $.ajax({
+            type: 'POST',
+            url: "/myclient/add_product_unit/",
+            data: frm.serialize(),
+            success: function (data) {
+                alert(data.p_unit);
+            },
+            error: function(data) {
+                alert("Something went wrong!");
             }
-            
-        }
+        });
+        return false;
     });
-}
 
+});
 
 
 // delete a row from table

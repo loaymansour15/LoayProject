@@ -1,0 +1,73 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-6 offset-md-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href=""> جميع المنتجات  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"> أضف منتج </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3 text-center">
+        <h1> <b> أضف منتج </b> </h1>
+        <hr>
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-4">
+        <form id="addProdUnit" method="POST" action="" dir="rtl">
+            {% csrf_token %}
+            
+            {{form|crispy}}
+            
+            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
+        </form>
+        <hr>
+        
+    </div>
+
+    <div class="col-md-4">
+        <form method="POST" action="" dir="rtl">
+            {% csrf_token %}
+            
+            2
+            
+            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
+        </form>
+        <hr>
+        
+    </div>
+
+    <div class="col-md-4">
+        <form method="POST" action="" dir="rtl">
+            {% csrf_token %}
+            
+            3
+            
+            <button type="submit" class="btn-primary btn-lg btn-block" > حفظ </button>
+        </form>
+        <hr>
+        
+    </div>
+
+    
+    
+
+</div>
+
+
+{% endblock content %}

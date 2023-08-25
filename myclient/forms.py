@@ -67,7 +67,13 @@ class LoginForm(forms.Form):
         self.fields['username'].label = 'إسم البراند '
         self.fields['password'].label = 'كلمة المرور'
 
-
+class AddProductUnit_Form(forms.ModelForm):
+    class Meta:
+        model = Product_Unit
+        exclude = ('user',)
+        widgets = {
+            'name': forms.TextInput(attrs={ 'placeholder':'مثال: كيلو , قطعة , متر '}),
+        }
 
 
 '''

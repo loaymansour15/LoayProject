@@ -16,6 +16,11 @@ from django.contrib.auth.decorators import login_required
 #import pyarabic.araby as araby
 #import pyarabic.number as number
 from django.db.models import Q
+import json
+from django.http import JsonResponse, request
+import random
+from datetime import date, datetime, timezone
+
 
 # Create your views here.
 
@@ -76,3 +81,26 @@ def home(request):
 
     context = {}
     return render(request, 'home.html', context)
+
+
+# Store Functions
+@login_required
+def add_product(request):
+    
+    form = AddProductUnit_Form()
+    context = {'form':form}
+
+    return render(request, 'add_product.html', context)
+
+
+#ajax
+@login_required
+def add_product_unit(request):
+
+    if request.method == 'POST':
+        form = AddProductUnit_Form(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+        
+            data = {'p_unit': name}
+            return JsonResponse(data)
