@@ -90,10 +90,14 @@ def add_product(request):
     if request.method == 'POST':
         form = AddProduct_Form(request.POST)
         if form.is_valid():
+            hello = form.cleaned_data.get('id_variant_option2')
+
             newForm = form.save(commit=False)
             newForm.user = request.user
             newForm.save()
+
             messages.success(request, 'تم تسجيل المنتج بنجاح')
+            return redirect('addProduct')
         else:
             messages.error(request, ' برجاء إضافه البيانات بشكل صحيح ')
     else: # GET
@@ -101,9 +105,9 @@ def add_product(request):
 
     form1 = AddProductUnit_Form()
     form2 = AddProductVariant_Form()
-    form3 = AddProductVariantOptions_Form()
+    #form3 = AddProductVariantOptions_Form()
     
-    context = {'form1':form1, 'form2':form2, 'form3': form3, 'form':form}
+    context = {'form1':form1, 'form2':form2, 'form':form}
 
     return render(request, 'add_product.html', context)
 
@@ -154,6 +158,7 @@ def add_product_variant(request):
             data = {'p_variant': name, 'exist':exist, 'option_text':new_variant.name, 'option_value':new_variant.id}
             return JsonResponse(data)
 
+'''
 @login_required
 def add_product_var_options(request):
     if request.method == 'POST':
@@ -176,3 +181,15 @@ def add_product_var_options(request):
                 return JsonResponse(data)
             else:
                 pass
+'''
+
+@login_required
+def get_product_variants(request):
+    all_variants = Product_Variant.objects.all()
+    result = []
+    for a in all_variants:
+        result.append((a.id, a.name))
+        
+    data = {'variants': result}
+    return JsonResponse(data)
+

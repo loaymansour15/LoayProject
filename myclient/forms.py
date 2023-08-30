@@ -83,6 +83,7 @@ class AddProductVariant_Form(forms.ModelForm):
             'name': forms.TextInput(attrs={ 'placeholder':'مثال: لون , مقاس '}),
         }
 
+'''
 class AddProductVariantOptions_Form(forms.ModelForm):
     class Meta:
         model = Product_Variant_Options
@@ -90,11 +91,15 @@ class AddProductVariantOptions_Form(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={ 'placeholder':'مثال: لو لون (احمر ، ازرق ) '}),
         }
+'''
 
 class AddProduct_Form(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ('user',)
+        widgets = {
+            'variant_option': forms.TextInput(attrs={ 'placeholder':'مثال: لو لون (احمر ، ازرق، الخ... ) '}),
+        }
 
 
 '''

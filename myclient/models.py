@@ -103,7 +103,7 @@ class Product_Variant(models.Model):
     def __str__(self):
         return self.name
 
-
+'''
 class Product_Variant_Options(models.Model):
     prod_variant = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="نوع المتغير")
     name = models.CharField(max_length=100, verbose_name="إضافة متغير جديد")
@@ -113,18 +113,35 @@ class Product_Variant_Options(models.Model):
 
     def __str__(self):
         return self.name
+'''
+'''
+class Product_Variant_Dynamic_Options(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE, verbose_name="المنتج")
+    variant = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="نوع المتغير", blank=True, null=True)
+    variant_option = models.CharField(max_length=100, verbose_name="إضافة إسم متغير ", blank=True, null=True)
 
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
+
+    def __str__(self):
+        return self.product
+'''
 
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name="إسم المنتج")
     unit = models.ForeignKey("Product_Unit", on_delete=models.CASCADE, verbose_name="الوحدة")
-    variant = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="نوع المتغير", blank=True, null=True)
-    variant_option = ChainedForeignKey(Product_Variant_Options, chained_field="variant", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name="إسم المتغير", blank=True, null=True)
     quantity = models.IntegerField(verbose_name="الكمية", validators=[MinValueValidator(0),MaxValueValidator(10000000)])
+    cost = models.IntegerField(verbose_name="التكلفة", validators=[MinValueValidator(0),MaxValueValidator(10000000)])
+    #variant_option = ChainedForeignKey(Product_Variant_Options, chained_field="variant", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name="إسم المتغير", blank=True, null=True)
+    variant1 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 1 ", blank=True, null=True, related_name="v1")
+    variant_option1 = models.CharField(max_length=100, verbose_name=" إضافة إسم متغير 1 ", blank=True, null=True)
+    variant2 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 2 ", blank=True, null=True, related_name="v2")
+    variant_option2 = models.CharField(max_length=100, verbose_name=" إضافة إسم متغير 2 ", blank=True, null=True)
 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
     def __str__(self):
         return self.name
+

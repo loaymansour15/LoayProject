@@ -22,25 +22,45 @@
           <a class="nav-link text-right" href=""> لوحة التحكم </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link text-right" href="">  محفظتي  </a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ user.username|truncatechars:15 }}
+          </a>
+          <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="">البيانات الشخصية</a>
+            <a class="dropdown-item" href=""> بيانات التواصل</a>
+            <a class="dropdown-item" href=""> تغيير كلمة المرور </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+          </div>
         </li>
-        {% endif %}
-
-        <li class="nav-item">
-          <a class="nav-link text-right" href="">باقات الشحن </a>
-        </li>
-        
-        {% if user.is_authenticated %}
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            الخدمات
+             المحفظة
           </a>
           <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="">اضف تقييم</a>
+            <a class="dropdown-item" href=""> محفظتي  </a>
             <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="">  إشحن المحفظة </a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-right" href="">الإشعارات  </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            العملاء
+          </a>
+          <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href=""> أضف عميل  </a>
+            <a class="dropdown-item" href="">  جميع العملاء  </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="">اضف تقييم لعميل</a>
             <a class="dropdown-item" href=""> إبحث عن عميل </a>
+            
           </div>
         </li>
 
@@ -55,21 +75,38 @@
             <a class="dropdown-item" href="">  جرد المخزن  </a>
           </div>
         </li>
-        
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ user.username|truncatechars:15 }}
+            الطلبات
           </a>
           <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="">البيانات الشخصية</a>
-            <a class="dropdown-item" href=""> بيانات التواصل</a>
-            <a class="dropdown-item" href=""> تغيير كلمة المرور </a>
+            <a class="dropdown-item" href=""> أضف طلب  </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
+            <a class="dropdown-item" href="">  جميع الطلبات  </a>
           </div>
         </li>
-        
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            إعدادات الحساب
+          </a>
+          <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href=""> تكاليف الشحن </a>
+            <a class="dropdown-item" href="">  شركات الشحن </a>
+            <a class="dropdown-item" href=""> حالات الطلب  </a>
+            <a class="dropdown-item" href=""> قنوات البيع   </a>
+          </div>
+        </li> 
+
+        <li class="nav-item">
+          <a class="nav-link text-right" href=""> التقارير الماليه </a>
+        </li>
+
         {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-right" href=""> باقات الشحن </a>
+        </li>
         <li class="nav-item text-right">
           <a class="nav-link" href="{% url 'loginURL' %}">تسجيل دخول</a> 
         </li>
@@ -77,6 +114,7 @@
           <a class="nav-link" href="">  إنشاء حساب</a> 
         </li>
         {% endif %}
+        
       </ul>
       
     </div>
