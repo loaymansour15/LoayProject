@@ -1,0 +1,62 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href=""> جميع الطلبات  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"> أضف طلب </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3 text-center">
+        <h1> <b> أضف طلب جديد </b> </h1>
+        <hr><br>
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-6 offset-md-3">
+        <h3> <b> أضف بيانات المنتجات </b> </h3>
+
+        <form id="addOrderProductDetail" method="POST" action="{% url 'addOrderProductDetail' %}" dir="rtl">
+            {% csrf_token %}
+            {{ form.media.js }}
+            
+            {{form|crispy}}
+            
+            <hr>
+            <button id="addProdButton" type="submit" class="btn-success btn-lg btn-block" > إحفظ وأضف اخر </button>
+        </form>
+        <hr>
+        <div class="row text-center">
+            <div class="col">
+                <a> <button id="prodToNext" class="btn-primary btn-lg btn-block" > التالي </button> </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'addOrderClientDetail' %}"> <button id="prodToPrev" class="btn-info btn-lg btn-block" > السابق </button> </a>
+            </div>
+        </div>
+        
+        <hr>
+        
+    </div>    
+
+</div>
+
+
+{% endblock content %}

@@ -24,13 +24,19 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.home, name='homeURL'),
 
+    #authentication
     path('login/', views.login_view, name='loginURL'),
     path('logout/', MyLogoutView.as_view(), name='logout'),
 
+    #product in store
     path('add_product/', views.add_product, name='addProduct'),
     path('add_product_setting/', views.add_product_setting, name='addProductSetting'),
 
-    path('get_variants/', views.get_product_variants, name='getVariants'),
+    #add order
+    path('add_order_client_detail/', views.add_order_client_details, name='addOrderClientDetail'),
+    path('add_order_product_detail/', views.add_order_product_details, name='addOrderProductDetail'),
+
+    #path('get_variants/', views.get_product_variants, name='getVariants'),
 
     path('accounts/password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset_form.html'), name="resetPassword"),
     path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),),

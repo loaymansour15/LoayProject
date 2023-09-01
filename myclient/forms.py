@@ -106,6 +106,54 @@ class AddProduct_Form(forms.ModelForm):
         exclude = ('user',)
 
 
+class AddOrderClientDetail_Form(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = "__all__"
+        widgets = {
+            'mobile1_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
+            'mobile2_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
+
+        }
+    def clean(self):
+        self.cleaned_data = super(AddOrderClientDetail_Form, self).clean()
+        mobile1 = self.cleaned_data['mobile1']
+        mobile2 = self.cleaned_data['mobile2']
+        mobile2_has_whatsapp = self.cleaned_data['mobile2_has_whatsapp']
+
+        if mobile1 and has_char(mobile1):
+            self.add_error('mobile1',"  يجب ان لا يتكون رقم الموبايل من اي حرف  ")
+        if mobile1 and len(mobile1) != 11:
+            self.add_error('mobile1',"يجب أن يتكون رقم الموبايل من 11 رقمًا")
+        if mobile2 and has_char(mobile2):
+            self.add_error('mobile2',"  يجب ان لا يتكون رقم الموبايل من اي حرف  ")
+        if mobile2 and len(mobile2) != 11:
+            self.add_error('mobile2',"يجب أن يتكون رقم الموبايل من 11 رقمًا")
+        if not mobile2 and mobile2_has_whatsapp:
+            self.add_error('mobile2_has_whatsapp', ' لا يمكن اضافه واتس اب لرقم موبايل 2 لانه غير موجود ')
+        if mobile1 and mobile2 and mobile1 == mobile2:
+            self.add_error('mobile2', ' يجب تغيير موبايل رقم 2 ليصبح مختلف عن موبايل رقم 1 ')
+
+        if mobile1:
+            self.cleaned_data['mobile1'] = check_arabic_no(mobile1)
+        if mobile2:
+            self.cleaned_data['mobile2'] = check_arabic_no(mobile2)
+        
+        return self.cleaned_data
+
+class AddOrderProductDetail_Form(forms.ModelForm):
+    class Meta:
+        model = OrderProduct
+        exclude = ('order', )
+
+    def __init__(self, *args, **kwargs):
+        super(AddOrderProductDetail_Form, self).__init__(*args, **kwargs)
+        self.fields['variant1'].widget.attrs['disabled'] = 'disabled'
+        self.fields['variant2'].widget.attrs['disabled'] = 'disabled'
+        self.fields['variant_option1'].widget.attrs['disabled'] = 'disabled'
+        self.fields['variant_option2'].widget.attrs['disabled'] = 'disabled'
+
+
 '''
 class User_Type_Choice_Form(forms.ModelForm):
     class Meta:

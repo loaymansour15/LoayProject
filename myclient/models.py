@@ -141,8 +141,10 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="إسم المنتج")
     category = models.ForeignKey("Product_Category", on_delete=models.CASCADE, verbose_name="فئة المنتج", null=True)
     unit = models.ForeignKey("Product_Unit", on_delete=models.CASCADE, verbose_name="الوحدة")
-    quantity = models.IntegerField(verbose_name="الكمية", validators=[MinValueValidator(0),MaxValueValidator(10000000)])
-    cost = models.IntegerField(verbose_name="التكلفة", validators=[MinValueValidator(0),MaxValueValidator(10000000)])
+    quantity = models.IntegerField(verbose_name="الكمية", validators=[MinValueValidator(0),MaxValueValidator(10000000)], default=0)
+    cost = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="التكلفة", default=0)
+    price = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="سعر البيع  ", default=0)
+    discount = models.IntegerField( validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="الخصم  ", default=0, blank=True)
     variant1 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 1 ", blank=True, null=True, related_name="v1")
     variant_option1 = ChainedForeignKey(Product_Variant_Options, chained_field="variant1", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name=" إسم متغير 1 ", blank=True, null=True, related_name="vr1")
     variant2 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 2 ", blank=True, null=True, related_name="v2")
@@ -154,3 +156,52 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    client = models.ForeignKey("Client", on_delete=models.CASCADE)
+    order_uid = models.CharField(max_length=500, verbose_name="رقم الأوردر ")
+    total_order_before_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب قبل الشحن", null=True)
+    total_order_after_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب شامل الشحن", null=True)
+
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
+
+    def __str__(self):
+        return self.user + " " + self.client
+
+class OrderProduct(models.Model):
+    order = models.ForeignKey("Order", on_delete=models.CASCADE)
+    category = models.ForeignKey("Product_Category", on_delete=models.CASCADE, verbose_name="فئة المنتج", null=True)
+    product = ChainedForeignKey("Product", chained_field="category", chained_model_field="category", show_all=False, auto_choose=True, sort=True, verbose_name=" إسم المنتج  ", blank=False, null=True)
+    quantity = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="الكمية", default=0)
+    cost = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="التكلفة", default=0)
+    price = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="سعر البيع ", default=0)
+    discount = models.IntegerField( validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="الخصم ", default=0, blank=True)
+    variant1 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 1 ", blank=True, null=True, related_name="vp1")
+    variant_option1 = ChainedForeignKey(Product_Variant_Options, chained_field="variant1", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name=" إسم متغير 1 ", blank=True, null=True, related_name="vrp1")
+    variant2 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 2 ", blank=True, null=True, related_name="vp2")
+    variant_option2 = ChainedForeignKey(Product_Variant_Options, chained_field="variant2", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name=" إسم متغير 2 ", blank=True, null=True, related_name="vrp2")
+
+
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
+
+    def __str__(self):
+        return self.order + " " + self.product
+
+class Client(models.Model):
+    client_name = models.CharField(max_length=100, verbose_name="إسم العميل ")
+    mobile1 = models.CharField(max_length=11, verbose_name="موبايل 1", blank=False, null=True)
+    mobile1_has_whatsapp = models.BooleanField(default=True, verbose_name=" واتس اب ؟")
+    mobile2 = models.CharField(max_length=11, blank=True, null=True, verbose_name="موبايل 2")
+    mobile2_has_whatsapp = models.BooleanField(default=False, verbose_name=" واتس اب ؟")
+    address = models.CharField(max_length=200, verbose_name="العنوان تفصيلي  ")
+    country_c = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name="الدولة", blank=False, null=True)
+    state_c = ChainedForeignKey(State, chained_field="country_c", chained_model_field="country", show_all=False, auto_choose=True, sort=True, verbose_name="المحافظة", blank=False, null=True)
+    
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
+
+    def __str__(self):
+        return self.client_name

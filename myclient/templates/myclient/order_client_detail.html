@@ -1,0 +1,54 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href=""> جميع الطلبات  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"> أضف طلب </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3 text-center">
+        <h1> <b> أضف طلب جديد </b> </h1>
+        <hr><br>
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-6 offset-md-3">
+        <h3> <b> أضف بيانات العميل </b> </h3>
+
+        <form id="addOrderClientDetail" method="POST" action="{% url 'addOrderClientDetail' %}" dir="rtl">
+            {% csrf_token %}
+            {{ form.media.js }}
+            
+            {{form|crispy}}
+            
+            <hr>
+            <button id="addClientdButton" type="submit" class="btn-success btn-lg btn-block" > إحفظ واستمر </button>
+        </form>
+        <hr>
+        <a href="{% url 'addOrderProductDetail' %}"> <button id="clientToNext" class="btn-primary btn-lg btn-block" > أضف لاحقا </button> </a>
+        <hr>
+        
+    </div>    
+
+</div>
+
+
+{% endblock content %}

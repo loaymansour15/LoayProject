@@ -175,6 +175,26 @@ def add_product_setting(request):
 
     return render(request, 'product_setting.html', context)
 
+
+@login_required
+def add_order_client_details(request):
+
+    form = AddOrderClientDetail_Form()
+    
+    context = {'form':form}
+
+    return render(request, 'order_client_detail.html', context)
+
+@login_required
+def add_order_product_details(request):
+
+    form = AddOrderProductDetail_Form()
+    
+    context = {'form':form}
+
+    return render(request, 'order_product_detail.html', context)
+
+
 #ajax
 @login_required
 def add_product_unit(request):
