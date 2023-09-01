@@ -170,6 +170,7 @@ class Order(models.Model):
     def __str__(self):
         return self.order_uid
 
+
 class OrderProduct(models.Model):
     order = models.ForeignKey("Order", on_delete=models.CASCADE)
     category = models.ForeignKey("Product_Category", on_delete=models.CASCADE, verbose_name="فئة المنتج", null=True)
