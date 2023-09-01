@@ -10,6 +10,9 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
+import random
+import math
+
 from .forms import *
 from .models import *
 from django.contrib.auth.decorators import login_required
@@ -175,6 +178,53 @@ def add_product_setting(request):
 
     return render(request, 'product_setting.html', context)
 
+@login_required
+def start_order(request):
+    if request.method == 'POST':
+        while True:
+            order_uid = generate_order_uid()
+            found = Order.objects.filter(order_uid=order_uid).first()
+            if not found:
+                new_order = Order(order_uid=order_uid, user=request.user)
+                new_order.save()
+                break
+
+        return redirect('addOrderProductDetail', ouid=order_uid)
+    else:
+        return render(request, 'start_order.html')
+
+
+def generate_order_uid():
+    digits = [i for i in range(0, 10)]
+    alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    ## initializing a string
+    random_str = ""
+
+    for i in range(2):
+        ## generating a random index
+        ## if we multiply with 10 it will generate a number between 0 and 10 not including 10
+        ## multiply the random.random() with length of your base list or str
+        index = math.floor(random.random() * 26)
+        random_str += alpha[index]
+
+    ## we can generate any lenght of string we want
+    for i in range(7):
+        index = math.floor(random.random() * 10)
+        random_str += str(digits[index])
+
+
+    return random_str
+
+@login_required
+def add_order_product_details(request, ouid):
+
+    form = AddOrderProductDetail_Form()
+    
+    context = {'form':form, 'ouid':ouid}
+
+    return render(request, 'order_product_detail.html', context)
+
 
 @login_required
 def add_order_client_details(request):
@@ -184,15 +234,6 @@ def add_order_client_details(request):
     context = {'form':form}
 
     return render(request, 'order_client_detail.html', context)
-
-@login_required
-def add_order_product_details(request):
-
-    form = AddOrderProductDetail_Form()
-    
-    context = {'form':form}
-
-    return render(request, 'order_product_detail.html', context)
 
 
 #ajax

@@ -33,7 +33,7 @@
     <div class="col-md-6 offset-md-3">
         <h3> <b> أضف بيانات المنتجات </b> </h3>
 
-        <form id="addOrderProductDetail" method="POST" action="{% url 'addOrderProductDetail' %}" dir="rtl">
+        <form id="addOrderProductDetail" method="POST" action="{% url 'addOrderProductDetail' ouid %}" dir="rtl">
             {% csrf_token %}
             {{ form.media.js }}
             
@@ -43,6 +43,9 @@
             <button id="addProdButton" type="submit" class="btn-success btn-lg btn-block" > إحفظ وأضف اخر </button>
         </form>
         <hr>
+        <a> <button id="prodToNext" class="btn-primary btn-lg btn-block" > التالي </button> </a>
+        <hr>
+        <!--
         <div class="row text-center">
             <div class="col">
                 <a> <button id="prodToNext" class="btn-primary btn-lg btn-block" > التالي </button> </a>
@@ -51,9 +54,8 @@
                 <a href="{% url 'addOrderClientDetail' %}"> <button id="prodToPrev" class="btn-info btn-lg btn-block" > السابق </button> </a>
             </div>
         </div>
-        
         <hr>
-        
+        -->
     </div>    
 
 </div>

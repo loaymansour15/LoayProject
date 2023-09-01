@@ -31,16 +31,17 @@
 <div class="row text-center" >
 
     <div class="col-md-6 offset-md-3">
-        <h3> <b> أضف بيانات العميل </b> </h3>
-
-        <form id="addOrderClientDetail" method="POST" action="{% url 'addOrderClientDetail' %}" dir="rtl">
+        
+        <form method="POST" action="{% url 'startOrder' %}" dir="rtl">
             {% csrf_token %}
-            {{ form.media.js }}
+           
+            <div id="loading">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i><br><br>
+            </div>
             
-            {{form|crispy}}
-            
+
+            <button id="startOrder" type="submit" class="btn-primary btn-lg btn-block" onclick="showloading()"> إبدء  </button>
             <hr>
-            <button id="addClientdButton" type="submit" class="btn-success btn-lg btn-block" > إحفظ  </button>
         </form>
         
     </div>    

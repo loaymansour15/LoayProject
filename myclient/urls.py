@@ -33,8 +33,9 @@ urlpatterns = [
     path('add_product_setting/', views.add_product_setting, name='addProductSetting'),
 
     #add order
+    path('start_order/', views.start_order, name="startOrder"),
+    path('add_order_product_detail/<str:ouid>/', views.add_order_product_details, name='addOrderProductDetail'),
     path('add_order_client_detail/', views.add_order_client_details, name='addOrderClientDetail'),
-    path('add_order_product_detail/', views.add_order_product_details, name='addOrderProductDetail'),
 
     #path('get_variants/', views.get_product_variants, name='getVariants'),
 

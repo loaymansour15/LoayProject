@@ -159,8 +159,8 @@ class Product(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    client = models.ForeignKey("Client", on_delete=models.CASCADE)
-    order_uid = models.CharField(max_length=500, verbose_name="رقم الأوردر ")
+    client = models.ForeignKey("Client", on_delete=models.CASCADE, null=True)
+    order_uid = models.CharField(max_length=500, verbose_name="رقم الأوردر ", unique=True)
     total_order_before_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب قبل الشحن", null=True)
     total_order_after_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب شامل الشحن", null=True)
 
@@ -168,7 +168,7 @@ class Order(models.Model):
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
     def __str__(self):
-        return self.user + " " + self.client
+        return self.order_uid
 
 class OrderProduct(models.Model):
     order = models.ForeignKey("Order", on_delete=models.CASCADE)
@@ -197,8 +197,7 @@ class Client(models.Model):
     mobile2 = models.CharField(max_length=11, blank=True, null=True, verbose_name="موبايل 2")
     mobile2_has_whatsapp = models.BooleanField(default=False, verbose_name=" واتس اب ؟")
     address = models.CharField(max_length=200, verbose_name="العنوان تفصيلي  ")
-    country_c = models.ForeignKey(Country, on_delete=models.CASCADE, verbose_name="الدولة", blank=False, null=True)
-    state_c = ChainedForeignKey(State, chained_field="country_c", chained_model_field="country", show_all=False, auto_choose=True, sort=True, verbose_name="المحافظة", blank=False, null=True)
+    state = models.ForeignKey(State, on_delete=models.CASCADE, verbose_name="المحافظة", blank=False, null=True)
     
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")

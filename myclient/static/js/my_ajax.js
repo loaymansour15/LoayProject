@@ -44,6 +44,8 @@ function removeVariableFieldsProduct(){
 // add product unit
 $(document).ready(function(){
 
+    $('#loading').hide()
+
      /*
     $('#message1success').hide();
     $('#message1error').hide();
@@ -184,10 +186,12 @@ $(document).ready(function(){
     });
     */
 
-
 });
 
 
+function showloading(){
+    $('#loading').show();
+}
 
 // delete a row from table
 function deleteTableRow(id){
