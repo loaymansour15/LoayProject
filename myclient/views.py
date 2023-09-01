@@ -90,8 +90,6 @@ def add_product(request):
     if request.method == 'POST':
         form = AddProduct_Form(request.POST)
         if form.is_valid():
-            hello = form.cleaned_data.get('id_variant_option2')
-
             newForm = form.save(commit=False)
             newForm.user = request.user
             newForm.save()
@@ -102,15 +100,80 @@ def add_product(request):
             messages.error(request, ' برجاء إضافه البيانات بشكل صحيح ')
     else: # GET
         form = AddProduct_Form()
-
-    form1 = AddProductUnit_Form()
-    form2 = AddProductVariant_Form()
-    #form3 = AddProductVariantOptions_Form()
     
-    context = {'form1':form1, 'form2':form2, 'form':form}
+    context = {'form':form}
 
     return render(request, 'add_product.html', context)
 
+
+@login_required
+def add_product_setting(request):
+    if request.method == 'POST':
+        form1 = AddProductUnit_Form(request.POST)
+        form2 = AddProductVariant_Form(request.POST)
+        form3 = AddProductVariantOptions_Form(request.POST)
+        form4 = AddProductCategory_Form(request.POST)
+        if request.POST['action'] == "frm1":
+            if form1.is_valid():
+                name_unit = form1.cleaned_data.get('name_unit')
+                found = Product_Unit.objects.filter(user=request.user, name_unit=name_unit).first()
+                if not found:
+                    newForm1 = form1.save(commit=False)
+                    newForm1.user = request.user
+                    newForm1.save()
+                    messages.success(request, 'تم تسجيل الوحدة بنجاح')
+                else:
+                    messages.error(request, 'تم تسجيل الوحدة مسبقا')
+                return redirect('addProductSetting')
+
+        if request.POST['action'] == "frm2":
+            if form2.is_valid():
+                name_var = form2.cleaned_data.get('name_var')
+                found = Product_Variant.objects.filter(user=request.user, name_var=name_var).first()
+                if not found:
+                    newForm2 = form2.save(commit=False)
+                    newForm2.user = request.user
+                    newForm2.save()
+                    messages.success(request, 'تم تسجيل نوع المتغير بنجاح')
+                else:
+                    messages.error(request, 'تم تسجيل نوع المتغير مسبقا')
+                return redirect('addProductSetting')
+
+        if request.POST['action'] == "frm3":
+            if form3.is_valid():
+                prod_variant = form3.cleaned_data.get('prod_variant')
+                name_var_op = form3.cleaned_data.get('name_var_op')
+                found = Product_Variant_Options.objects.filter(prod_variant=prod_variant, name_var_op=name_var_op).first()
+                if not found:
+                    form3.save()
+                    messages.success(request, 'تم تسجيل إسم المتغير بنجاح')
+                else:
+                    messages.error(request, 'تم تسجيل إسم المتغير مسبقا')
+                return redirect('addProductSetting')
+
+        if request.POST['action'] == "frm4":
+            if form4.is_valid():
+                name_cat = form4.cleaned_data.get('name_cat')
+                found = Product_Category.objects.filter(user=request.user, name_cat=name_cat).first()
+                if not found:
+                    newForm4 = form4.save(commit=False)
+                    newForm4.user = request.user
+                    newForm4.save()
+                    messages.success(request, 'تم تسجيل فئة المنتج بنجاح')
+                else:
+                    messages.error(request, 'تم تسجيل فئة المنتج مسبقا')
+                return redirect('addProductSetting')
+        else:
+            messages.error(request, ' برجاء إضافه البيانات بشكل صحيح ')
+    else: # GET
+        form1 = AddProductUnit_Form()
+        form2 = AddProductVariant_Form()
+        form3 = AddProductVariantOptions_Form()
+        form4 = AddProductCategory_Form()
+    
+    context = {'form1':form1, 'form2':form2, 'form3':form3, 'form4':form4}
+
+    return render(request, 'product_setting.html', context)
 
 #ajax
 @login_required
@@ -135,6 +198,7 @@ def add_product_unit(request):
         
             data = {'p_unit': name, 'exist':exist, 'option_text':new_unit.name, 'option_value':new_unit.id}
             return JsonResponse(data)
+
 
 @login_required
 def add_product_variant(request):

@@ -72,7 +72,7 @@ class AddProductUnit_Form(forms.ModelForm):
         model = Product_Unit
         exclude = ('user',)
         widgets = {
-            'name': forms.TextInput(attrs={ 'placeholder':'مثال: كيلو , قطعة , متر '}),
+            'name_unit': forms.TextInput(attrs={ 'placeholder':'مثال: كيلو , قطعة , متر '}),
         }
 
 class AddProductVariant_Form(forms.ModelForm):
@@ -80,26 +80,30 @@ class AddProductVariant_Form(forms.ModelForm):
         model = Product_Variant
         exclude = ('user',)
         widgets = {
-            'name': forms.TextInput(attrs={ 'placeholder':'مثال: لون , مقاس '}),
+            'name_var': forms.TextInput(attrs={ 'placeholder':'مثال: لون , مقاس '}),
         }
 
-'''
+
 class AddProductVariantOptions_Form(forms.ModelForm):
     class Meta:
         model = Product_Variant_Options
+        fields = "__all__"
+        widgets = {
+            'name_var_op': forms.TextInput(attrs={ 'placeholder':'مثال: في حالة اللون (احمر ، ازرق ) '}),
+        }
+
+class AddProductCategory_Form(forms.ModelForm):
+    class Meta:
+        model = Product_Category
         exclude = ('user',)
         widgets = {
-            'name': forms.TextInput(attrs={ 'placeholder':'مثال: لو لون (احمر ، ازرق ) '}),
+            'name_cat': forms.TextInput(attrs={ 'placeholder':' فئة المنتج '}),
         }
-'''
 
 class AddProduct_Form(forms.ModelForm):
     class Meta:
         model = Product
         exclude = ('user',)
-        widgets = {
-            'variant_option': forms.TextInput(attrs={ 'placeholder':'مثال: لو لون (احمر ، ازرق، الخ... ) '}),
-        }
 
 
 '''

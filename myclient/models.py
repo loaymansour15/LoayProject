@@ -85,35 +85,44 @@ class BrandProfile(models.Model):
 
 class Product_Unit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, verbose_name="إضافة وحدة جديدة")
+    name_unit = models.CharField(max_length=100, verbose_name="إضافة وحدة جديدة")
 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
     def __str__(self):
-        return self.name
+        return self.name_unit
 
 class Product_Variant(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100, verbose_name="إضافة نوع متغير جديد")
+    name_var = models.CharField(max_length=100, verbose_name="إضافة نوع متغير جديد")
 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
     def __str__(self):
-        return self.name
+        return self.name_var
 
-'''
 class Product_Variant_Options(models.Model):
     prod_variant = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="نوع المتغير")
-    name = models.CharField(max_length=100, verbose_name="إضافة متغير جديد")
+    name_var_op = models.CharField(max_length=100, verbose_name="إضافة إسم متغير جديد")
 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
     def __str__(self):
-        return self.name
-'''
+        return self.name_var_op
+
+class Product_Category(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    name_cat = models.CharField(max_length=100, verbose_name="فئة المنتج")
+
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
+
+    def __str__(self):
+        return self.name_cat
+
 '''
 class Product_Variant_Dynamic_Options(models.Model):
     product = models.ForeignKey("Product", on_delete=models.CASCADE, verbose_name="المنتج")
@@ -130,14 +139,14 @@ class Product_Variant_Dynamic_Options(models.Model):
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, verbose_name="إسم المنتج")
+    category = models.ForeignKey("Product_Category", on_delete=models.CASCADE, verbose_name="فئة المنتج", null=True)
     unit = models.ForeignKey("Product_Unit", on_delete=models.CASCADE, verbose_name="الوحدة")
     quantity = models.IntegerField(verbose_name="الكمية", validators=[MinValueValidator(0),MaxValueValidator(10000000)])
     cost = models.IntegerField(verbose_name="التكلفة", validators=[MinValueValidator(0),MaxValueValidator(10000000)])
-    #variant_option = ChainedForeignKey(Product_Variant_Options, chained_field="variant", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name="إسم المتغير", blank=True, null=True)
     variant1 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 1 ", blank=True, null=True, related_name="v1")
-    variant_option1 = models.CharField(max_length=100, verbose_name=" إضافة إسم متغير 1 ", blank=True, null=True)
+    variant_option1 = ChainedForeignKey(Product_Variant_Options, chained_field="variant1", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name=" إسم متغير 1 ", blank=True, null=True, related_name="vr1")
     variant2 = models.ForeignKey("Product_Variant", on_delete=models.CASCADE, verbose_name="  نوع المتغير 2 ", blank=True, null=True, related_name="v2")
-    variant_option2 = models.CharField(max_length=100, verbose_name=" إضافة إسم متغير 2 ", blank=True, null=True)
+    variant_option2 = ChainedForeignKey(Product_Variant_Options, chained_field="variant2", chained_model_field="prod_variant", show_all=False, auto_choose=True, sort=True, verbose_name=" إسم متغير 2 ", blank=True, null=True, related_name="vr2")
 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")

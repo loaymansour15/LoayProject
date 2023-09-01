@@ -1,0 +1,83 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href=""> أضف منتج  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href=""> إعدادات المنتجات </a> </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3 text-center">
+        <h1> <b> إعدادات المنتجات </b> </h1>
+        <hr><br>
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-6 offset-md-3">
+        <form method="POST" action="{% url 'addProductSetting' %}" dir="rtl">
+            {% csrf_token %}
+            
+            {{form1|crispy}}       
+            
+            <button type="submit" name="action" class="btn-primary btn-lg btn-block" value="frm1"> حفظ الوحدة</button>
+        </form>
+        <hr>
+        
+    </div>
+
+    <div class="col-md-6 offset-md-3">
+        <form method="POST" action="{% url 'addProductSetting' %}" dir="rtl">
+            {% csrf_token %}
+            
+            {{form2|crispy}}
+            
+            <button type="submit" name="action" class="btn-primary btn-lg btn-block" value="frm2"> حفظ نوع المتغير</button>
+        </form>
+        <hr>
+        
+    </div>
+
+    <div class="col-md-6 offset-md-3">
+        <form method="POST" action="{% url 'addProductSetting' %}" dir="rtl">
+            {% csrf_token %}
+            
+            {{form3|crispy}}  
+            
+            <button type="submit" name="action" class="btn-primary btn-lg btn-block" value="frm3"> حفظ إسم المتغير</button>
+        </form>
+        <hr>
+        
+    </div> 
+
+    <div class="col-md-6 offset-md-3">
+        <form method="POST" action="{% url 'addProductSetting' %}" dir="rtl">
+            {% csrf_token %}
+            
+            {{form4|crispy}}       
+            
+            <button type="submit" name="action" class="btn-primary btn-lg btn-block" value="frm4"> حفظ فئة المنتج</button>
+        </form>
+        <hr>
+        
+    </div>
+
+</div>
+
+{% endblock content %}

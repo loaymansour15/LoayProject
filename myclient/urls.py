@@ -28,9 +28,7 @@ urlpatterns = [
     path('logout/', MyLogoutView.as_view(), name='logout'),
 
     path('add_product/', views.add_product, name='addProduct'),
-    path('add_product_unit/', views.add_product_unit, name='addProductUnit'),
-    path('add_product_variant/', views.add_product_variant, name='addProductVariant'),
-    #path('add_product_variant_options/', views.add_product_var_options, name='addProductVariantOptions'),
+    path('add_product_setting/', views.add_product_setting, name='addProductSetting'),
 
     path('get_variants/', views.get_product_variants, name='getVariants'),
 

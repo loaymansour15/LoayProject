@@ -27,8 +27,7 @@
             {{ user.username|truncatechars:15 }}
           </a>
           <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="">البيانات الشخصية</a>
-            <a class="dropdown-item" href=""> بيانات التواصل</a>
+            <a class="dropdown-item" href="">بيانات الحساب </a>
             <a class="dropdown-item" href=""> تغيير كلمة المرور </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
@@ -37,12 +36,12 @@
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             المحفظة
+             الإشتراك
           </a>
           <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href=""> محفظتي  </a>
+            <a class="dropdown-item" href=""> إشتراكي  </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="">  إشحن المحفظة </a>
+            <a class="dropdown-item" href="">  تجديد الإشتراك  </a>
           </div>
         </li>
 
@@ -59,7 +58,7 @@
             <a class="dropdown-item" href="">  جميع العملاء  </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="">اضف تقييم لعميل</a>
-            <a class="dropdown-item" href=""> إبحث عن عميل </a>
+            <a class="dropdown-item" href=""> إبحث عن تقييم العميل </a>
             
           </div>
         </li>
@@ -73,6 +72,8 @@
             <a class="dropdown-item" href=""> جميع المنتجات </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="">  جرد المخزن  </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'addProductSetting' %}">  إعدادات المنتجات </a>
           </div>
         </li>
 
@@ -89,7 +90,7 @@
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            إعدادات الحساب
+            إعدادات النظام
           </a>
           <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href=""> تكاليف الشحن </a>
@@ -99,9 +100,22 @@
           </div>
         </li> 
 
-        <li class="nav-item">
-          <a class="nav-link text-right" href=""> التقارير الماليه </a>
-        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-right" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             الحسابات
+          </a>
+          <div class="dropdown-menu text-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="">   تقارير المشتريات </a>
+            <a class="dropdown-item" href=""> فاتوره مشتريات جديده   </a>
+            <a class="dropdown-item" href="">  سند صرف نقديه   </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="">   تقارير المبيعات </a>
+            <a class="dropdown-item" href=""> سند قبض نقديه   </a>
+            <a class="dropdown-item" href="">   كشف حساب شركات الشحن   </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="">  تحليلي الأرباح   </a>
+          </div>
+        </li> 
 
         {% else %}
         <li class="nav-item">

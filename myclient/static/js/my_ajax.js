@@ -44,6 +44,7 @@ function removeVariableFieldsProduct(){
 // add product unit
 $(document).ready(function(){
 
+     /*
     $('#message1success').hide();
     $('#message1error').hide();
     $('#message2success').hide();
@@ -113,7 +114,7 @@ $(document).ready(function(){
         return false;
     });
 
-    /*
+   
     var frm3 = $('#addProdVarOptions');
     frm3.submit(function () {
         $.ajax({
