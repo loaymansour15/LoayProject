@@ -186,6 +186,35 @@ $(document).ready(function(){
     });
     */
 
+    var prod_droplist = $('#id_product')
+    prod_droplist.on('change', function() {
+        $.ajax({
+            type: 'GET',
+            url: "/myclient/get_product_data/",
+            data: {'prod_id':JSON.stringify(prod_droplist.val())},
+            success: function (data) { 
+                result = data.result[0]
+                $('#id_unit').val(result[0]).change()
+                $('#id_quantity').val(result[1])
+                $('#id_cost').val(result[2])
+                $('#id_price').val(result[3])
+                $('#id_discount').val(result[4])
+                $('#id_variant1').val(result[5]).change()
+
+                $('#id_variant_option1').val(result[6]).change()
+
+                $('#id_variant2').val(result[7]).change()
+
+                $('#id_variant_option2').val(result[8]).change()
+            },
+            error: function(data) {
+                
+            }
+        });
+
+        return false;
+    });
+
 });
 
 

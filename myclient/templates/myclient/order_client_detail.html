@@ -33,7 +33,7 @@
     <div class="col-md-6 offset-md-3">
         <h3> <b> أضف بيانات العميل </b> </h3>
 
-        <form id="addOrderClientDetail" method="POST" action="{% url 'addOrderClientDetail' %}" dir="rtl">
+        <form id="addOrderClientDetail" method="POST" action="{% url 'addOrderClientDetail' ouid %}" dir="rtl">
             {% csrf_token %}
             {{ form.media.js }}
             
@@ -42,6 +42,16 @@
             <hr>
             <button id="addClientdButton" type="submit" class="btn-success btn-lg btn-block" > إحفظ  </button>
         </form>
+        <hr>
+        <div class="row text-center">
+            <div class="col">
+                <a href=""> <button class="btn-primary btn-lg btn-block" > مراجعه الطلب </button> </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-info btn-lg btn-block" > السابق </button> </a>
+            </div>
+        </div>
+        <hr>
         
     </div>    
 

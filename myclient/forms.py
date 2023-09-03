@@ -109,7 +109,7 @@ class AddProduct_Form(forms.ModelForm):
 class AddOrderClientDetail_Form(forms.ModelForm):
     class Meta:
         model = Client
-        fields = "__all__"
+        exclude = ('user',)
         widgets = {
             'mobile1_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
             'mobile2_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
@@ -148,10 +148,16 @@ class AddOrderProductDetail_Form(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AddOrderProductDetail_Form, self).__init__(*args, **kwargs)
+        self.fields['unit'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant1'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant2'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant_option1'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant_option2'].widget.attrs['disabled'] = 'disabled'
+
+class AddOrderShippingDetail_Form(forms.ModelForm):
+    class Meta:
+        model = BrandCourierPrices
+        exclude = ('user', )
 
 
 '''

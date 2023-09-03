@@ -216,8 +216,18 @@ def generate_order_uid():
 
     return random_str
 
+
 @login_required
 def add_order_product_details(request, ouid):
+
+    if request.method == 'POST':
+        p_id = request.POST.get('product')
+        product = Product.objects.filter(id=p_id).first()
+        if product:
+            pass
+            #save the product in order product
+            messages.success(request, 'تم حفظ المنتج بنجاح')
+            return redirect('addOrderProductDetail', ouid)
 
     form = AddOrderProductDetail_Form()
     
@@ -225,15 +235,49 @@ def add_order_product_details(request, ouid):
 
     return render(request, 'order_product_detail.html', context)
 
+#ajax function get_product_data
+@login_required
+def get_product_data(request):
+    
+    prod = request.GET.get('prod_id')
+    prod_id = json.loads(prod)
+    p = Product.objects.filter(id=prod_id).first()
+    result = []
+    result.append((p.unit.id, p.quantity, p.cost, p.price, p.discount, p.variant1.id, p.variant_option1.id, p.variant2.id, p.variant_option2.id))
+        
+    data = {'result': result}
+    return JsonResponse((data))
 
 @login_required
-def add_order_client_details(request):
+def add_order_shipping_details(request, ouid):
+
+    form = AddOrderShippingDetail_Form()
+    
+    context = {'form':form, 'ouid':ouid}
+
+    return render(request, 'order_shipping_detail.html', context)
+
+@login_required
+def add_order_client_details(request, ouid):
 
     form = AddOrderClientDetail_Form()
     
-    context = {'form':form}
+    context = {'form':form, 'ouid':ouid}
 
     return render(request, 'order_client_detail.html', context)
+
+@login_required
+def delete_order(request, ouid):
+
+    found = Order.objects.filter(user=request.user, order_uid=ouid).first()
+    if found:
+        found.delete()
+        # delete from all releated tables
+        messages.success(request, 'تم إلغاء الطلب بنجاح')
+    else:
+        messages.error(request, 'هناك خطأ أثناء إلغاء الطلب')
+
+    return redirect('startOrder')
 
 
 #ajax

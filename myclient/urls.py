@@ -35,7 +35,12 @@ urlpatterns = [
     #add order
     path('start_order/', views.start_order, name="startOrder"),
     path('add_order_product_detail/<str:ouid>/', views.add_order_product_details, name='addOrderProductDetail'),
-    path('add_order_client_detail/', views.add_order_client_details, name='addOrderClientDetail'),
+    path('add_order_shipping_detail/<str:ouid>/', views.add_order_shipping_details, name='addOrderShippingDetail'),
+    path('add_order_client_detail//<str:ouid>/', views.add_order_client_details, name='addOrderClientDetail'),
+    path('deleteOrder/<str:ouid>/', views.delete_order, name='deleteOrder'),
+
+    #ajax urls
+    path('get_product_data/', views.get_product_data, name='getProductData'),
 
     #path('get_variants/', views.get_product_variants, name='getVariants'),
 
