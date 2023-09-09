@@ -141,18 +141,27 @@ class AddOrderClientDetail_Form(forms.ModelForm):
         
         return self.cleaned_data
 
-class AddOrderProductDetail_Form(forms.ModelForm):
+'''
+class FindOrderProductDetail_Form(forms.ModelForm):
     class Meta:
         model = OrderProduct
-        exclude = ('order', )
+        fields = ('category', 'product','unit', 'quantity','variant1', 'variant_option1','variant2', 'variant_option2',)
 
     def __init__(self, *args, **kwargs):
-        super(AddOrderProductDetail_Form, self).__init__(*args, **kwargs)
+        super(FindOrderProductDetail_Form, self).__init__(*args, **kwargs)
         self.fields['unit'].widget.attrs['disabled'] = 'disabled'
+        self.fields['quantity'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant1'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant2'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant_option1'].widget.attrs['disabled'] = 'disabled'
         self.fields['variant_option2'].widget.attrs['disabled'] = 'disabled'
+'''
+
+class AddOrderProductDetail_Form(forms.ModelForm):
+    class Meta:
+        model = OrderProduct
+        fields = ('cost', 'price', 'discount', 'quantity_t',)
+
 
 class AddOrderShippingDetail_Form(forms.ModelForm):
     class Meta:

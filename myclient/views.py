@@ -189,7 +189,7 @@ def start_order(request):
                 new_order.save()
                 break
 
-        return redirect('addOrderProductDetail', ouid=order_uid)
+        return redirect('showAllProducts', ouid=order_uid)
     else:
         return render(request, 'start_order.html')
 
@@ -216,22 +216,63 @@ def generate_order_uid():
 
     return random_str
 
+@login_required
+def show_all_products(request, ouid):
+
+    products = Product.objects.filter(user=request.user).all()
+    
+    context = {'products':products, 'ouid':ouid, 'link': 'addOrderProductDetail'}
+
+    return render(request, 'order_show_all_user_prods.html', context)
 
 @login_required
-def add_order_product_details(request, ouid):
+def show_all_order_products(request, ouid):
 
-    if request.method == 'POST':
-        p_id = request.POST.get('product')
-        product = Product.objects.filter(id=p_id).first()
-        if product:
-            pass
-            #save the product in order product
-            messages.success(request, 'تم حفظ المنتج بنجاح')
-            return redirect('addOrderProductDetail', ouid)
-
-    form = AddOrderProductDetail_Form()
+    found_order = Order.objects.filter(order_uid=ouid, user=request.user).first()
+    products = OrderProduct.objects.filter(order=found_order).all()
     
-    context = {'form':form, 'ouid':ouid}
+    context = {'products':products, 'ouid':ouid, 'link': 'addOrderProductDetail'}
+
+    return render(request, 'order_products.html', context)
+
+@login_required
+def add_order_product_details(request, ouid, id):
+
+    product = Product.objects.filter(id=id).first()
+    if request.method == 'POST':
+        form = AddOrderProductDetail_Form(request.POST)
+        if form.is_valid():
+            quantity = form.cleaned_data.get('quantity_t')
+            cost = form.cleaned_data.get('cost')
+            price = form.cleaned_data.get('price')
+            discount = form.cleaned_data.get('discount')
+            found_order = Order.objects.filter(order_uid=ouid, user=request.user).first()
+            found_prod_in_order = OrderProduct.objects.filter(order=found_order, product=product).first()
+            if not found_prod_in_order:
+                if quantity > 0 and price > 0 and cost > 0:
+                    if product:
+                        if int(quantity) > product.quantity:
+                            messages.error(request, 'الكميه غير متوفرة في المخزن')
+                            return render(request, 'order_product_detail.html', {'form':form, 'ouid':ouid, 'id':id})
+                        else:
+                            #save the product in order product
+                            this_order = Order.objects.filter(order_uid=ouid, user=request.user).first()
+                            orderProduct = OrderProduct(order=this_order, category=product.category, product=product, unit=product.unit, quantity_t=quantity, price=price, cost=cost, discount=discount, variant1=product.variant1, variant_option1=product.variant_option1, variant2=product.variant2, variant_option2=product.variant_option2)
+                            orderProduct.save()
+                            product.quantity = product.quantity - int(quantity)
+                            product.save()
+                            messages.success(request, 'تم حفظ المنتج بنجاح')
+                            return redirect('showAllProducts', ouid=ouid)
+                else:
+                    messages.error(request, 'يجب ان لا يكون الكميه والسعر والتكلفه = 0')
+            else:
+                messages.error(request, 'تم إضافه المنتج مسبقا لهذا الطلب')
+        else:
+            messages.error(request, 'لم يتم العثور علي المنتج')
+            return redirect('showAllProducts', ouid=ouid)
+
+    form = AddOrderProductDetail_Form(instance=product)
+    context = {'form':form, 'ouid':ouid, 'id':id}
 
     return render(request, 'order_product_detail.html', context)
 

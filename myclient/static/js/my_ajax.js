@@ -186,6 +186,7 @@ $(document).ready(function(){
     });
     */
 
+
     var prod_droplist = $('#id_product')
     prod_droplist.on('change', function() {
         $.ajax({

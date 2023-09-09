@@ -175,8 +175,8 @@ class OrderProduct(models.Model):
     order = models.ForeignKey("Order", on_delete=models.CASCADE)
     category = models.ForeignKey("Product_Category", on_delete=models.CASCADE, verbose_name="فئة المنتج", null=True)
     product = ChainedForeignKey("Product", chained_field="category", chained_model_field="category", show_all=False, auto_choose=False, sort=True, verbose_name=" إسم المنتج  ", blank=False, null=True)
-    unit = models.ForeignKey("Product_Unit", on_delete=models.CASCADE, verbose_name="الوحدة", null=True)
-    quantity = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="الكمية", default=0)
+    unit = models.ForeignKey("Product_Unit", on_delete=models.CASCADE, verbose_name="الوحدة ", null=True)
+    quantity_t = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="الكمية", default=0)
     cost = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="التكلفة", default=0)
     price = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="سعر البيع ", default=0)
     discount = models.IntegerField( validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="الخصم ", default=0, blank=True)
@@ -189,7 +189,7 @@ class OrderProduct(models.Model):
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
     def __str__(self):
-        return self.order + " " + self.product
+        return self.order.order_uid
 
 class Client(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

@@ -1,0 +1,116 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href=""> جميع الطلبات  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"> أضف طلب </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-10 offset-md-1 text-center">
+        <h1> <b> أضف طلب جديد </b> </h1>
+        <hr><br>
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-10 offset-md-1">
+        <h3> <b>  جميع منتجات الطلب </b> </h3>
+
+        <div class="row" dir="rtl">
+        
+
+            <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
+              {% if products %}
+                <table class="table table-striped" style="max-width: none;">
+                    <thead>
+                        <tr>
+                          <th>إسم الفئة</th>
+                          <th>إسم المنتج</th>
+                          <th>الوحدة </th>
+                          <th>الكمية </th>
+                          <th>التكلفة </th>
+                          <th>السعر </th>
+                          <th>الخصم </th>
+                          <th>نوع المتغير الأول </th>
+                          <th>إسم المتغير الأول </th>
+                          <th>نوع المتغير الثاني </th>
+                          <th>إسم المتغير الثاني </th>
+                          <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in products %}
+                          <tr onclick="window.location='{% url link ouid p.id %}';" style="cursor: default;">
+    
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.category}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.product.name}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.unit}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;">
+                                <span class="badge badge-pill badge-{% if p.quantity_t > 0 %}info{% else %}danger{%endif%}">
+                                    {{p.quantity_t}}
+                                </span>
+                            </td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.cost}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.price}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.discount}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.variant1}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.variant_option1}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.variant2}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.variant_option2}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> 
+                                <div class="row text-center">
+                                    <div class="col">
+                                        <a href=""> <button class="btn-danger btn-sm btn-block" > حذف </button> </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href=""> <button class="btn-primary btn-sm btn-block" > تعديل </button> </a>
+                                    </div>
+                                </div>
+                                
+                                
+                            </b></td>
+                            
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                  <h3 class="text-center" style="margin-top: 50px;"><b>لا يوجد منتجات </b></h3>
+                {% endif %}
+            </div>
+    
+        </div>
+       
+        <hr>
+        <div class="row text-center">
+            <div class="col">
+                <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-primary btn-lg btn-block" > التالي </button> </a>
+            </div>
+            <div class="col">
+                <a href="{% url 'showAllProducts' ouid %}"> <button class="btn-primary btn-lg btn-block" > جميع منتجاتي </button> </a>
+            </div>
+        </div>
+        <hr>
+    </div>    
+
+</div>
+
+
+{% endblock content %}
