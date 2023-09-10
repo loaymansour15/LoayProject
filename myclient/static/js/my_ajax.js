@@ -45,6 +45,7 @@ function removeVariableFieldsProduct(){
 $(document).ready(function(){
 
     $('#loading').hide()
+    $('#showShippingCost').hide()
 
      /*
     $('#message1success').hide();
@@ -216,7 +217,44 @@ $(document).ready(function(){
         return false;
     });
 
+
+    var courier_name, state_name;
+    var courier = $('#id_courier')
+    courier.on('change', function(){
+        courier_name = document.getElementById("id_courier").value;
+        state_name = document.getElementById("id_state").value;
+        if(courier_name && state_name){
+            getCourierShippingCost(courier_name, state_name)
+        }
+    });
+
+    var state = $('#id_state')
+    state.on('change', function(){
+        courier_name = document.getElementById("id_courier").value;
+        state_name = document.getElementById("id_state").value;
+        if(courier_name && state_name){
+            getCourierShippingCost(courier_name, state_name)
+        }
+    });
+    
+
 });
+
+function getCourierShippingCost(courier, state){
+    $.ajax({
+        type: 'GET',
+        url: "/myclient/get_courier_shipping_cost/",
+        data: {'courier':JSON.stringify(courier), 'state':JSON.stringify(state)},
+        success: function (data) { 
+            $('#showShippingCost').show()
+            $('#showShippingCost').text('')
+            $('#showShippingCost').append(data.result)
+        },
+        error: function(data) {
+            
+        }
+    });
+}
 
 
 function showloading(){

@@ -159,7 +159,6 @@ class Product(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    client = models.ForeignKey("Client", on_delete=models.CASCADE, null=True)
     order_uid = models.CharField(max_length=500, verbose_name="رقم الأوردر ", unique=True)
     total_order_before_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب قبل الشحن", null=True)
     total_order_after_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب شامل الشحن", null=True)
@@ -170,6 +169,18 @@ class Order(models.Model):
     def __str__(self):
         return self.order_uid
 
+class OrderShippingDetail(models.Model):
+    order = models.ForeignKey("Order", on_delete=models.CASCADE)
+    courier = models.ForeignKey("Courier", on_delete=models.CASCADE, verbose_name="إسم شركة الشحن ")
+    state = models.ForeignKey(State, on_delete=models.CASCADE, verbose_name="المحافظة", blank=False, null=True)
+    cost = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="التكلفة", default=0)
+    free_shipping =  models.BooleanField(default=False, verbose_name=" شحن مجاني؟")
+
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
+
+    def __str__(self):
+        return self.order.order_uid
 
 class OrderProduct(models.Model):
     order = models.ForeignKey("Order", on_delete=models.CASCADE)
@@ -192,7 +203,7 @@ class OrderProduct(models.Model):
         return self.order.order_uid
 
 class Client(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    order = models.ForeignKey("Order", on_delete=models.CASCADE, null=True)
     client_name = models.CharField(max_length=100, verbose_name="إسم العميل ")
     mobile1 = models.CharField(max_length=11, verbose_name="موبايل 1", blank=False, null=True)
     mobile1_has_whatsapp = models.BooleanField(default=True, verbose_name=" واتس اب ؟")
@@ -226,10 +237,12 @@ class BrandCourierPrices(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     courier = models.ForeignKey("Courier", on_delete=models.CASCADE, verbose_name="إسم شركة الشحن ")
     state = models.ForeignKey(State, on_delete=models.CASCADE, verbose_name="المحافظة", blank=False, null=True)
+    #state = ChainedForeignKey("State", chained_field="courier", chained_model_field="courier", show_all=False, auto_choose=False, sort=True, verbose_name=" المحافظة ", blank=False, null=True)
     cost = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(10000000)], verbose_name="التكلفة", default=0)
+    free_shipping =  models.BooleanField(default=False, verbose_name=" شحن مجاني؟")
 
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
     def __str__(self):
-        return self.courier
+        return self.courier.courier_name + " " + str(self.cost)

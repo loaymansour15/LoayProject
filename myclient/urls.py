@@ -43,6 +43,7 @@ urlpatterns = [
 
     #ajax urls
     path('get_product_data/', views.get_product_data, name='getProductData'),
+    path('get_courier_shipping_cost/', views.get_courier_shipping_cost, name="getCourierShippingCost"),
 
     #path('get_variants/', views.get_product_variants, name='getVariants'),
 

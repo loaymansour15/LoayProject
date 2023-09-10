@@ -293,7 +293,27 @@ def get_product_data(request):
 def add_order_shipping_details(request, ouid):
 
     form = AddOrderShippingDetail_Form()
-    
+    this_order = Order.objects.filter(order_uid=ouid, user=request.user).first()
+    if request.method == 'POST':
+        if this_order:
+            form = AddOrderShippingDetail_Form(request.POST)
+            if form.is_valid():
+                cost = form.cleaned_data.get('cost')
+                print('helooooo', cost)
+                free_shipping = form.cleaned_data.get('free_shipping')
+                if (free_shipping and cost == 0) or (not free_shipping and cost > 0):
+                    new_form = form.save(commit=False)
+                    new_form.order = this_order
+                    new_form.save()
+                    messages.success(request, 'تم تسجيل بيانات الشحن بنجاح')
+                elif free_shipping and cost > 0:
+                    messages.error(request, 'في حاله تكلفة الشحن المجاني يجب أن تكون تكلفة الشحن صفر')
+                elif not free_shipping and cost == 0:
+                    messages.error(request, 'في حاله تكلفة الشحن الغير مجاني يجب أن تكون تكلفة الشحن أكبر من صفر')
+
+        else:
+            messages.error(request, 'هذا الطلب اصبح غير موجود')
+
     context = {'form':form, 'ouid':ouid}
 
     return render(request, 'order_shipping_detail.html', context)
@@ -403,3 +423,25 @@ def get_product_variants(request):
     data = {'variants': result}
     return JsonResponse(data)
 
+
+@login_required
+def get_courier_shipping_cost(request):
+    courier = request.GET.get('courier')
+    courier_id = json.loads(courier)
+
+    state = request.GET.get('state')
+    state_id = json.loads(state)
+
+    courier_id = Courier.objects.filter(id=int(courier_id)).first()
+    state_id = State.objects.filter(id=int(state_id)).first()
+    brand_cour_prices = BrandCourierPrices.objects.filter(user=request.user, courier=courier_id, state=state_id).first()
+    print(brand_cour_prices, 'heloooo')
+
+    result = ""
+    if brand_cour_prices:
+        result = str(brand_cour_prices.cost) +" جم "+ "تكلفة الشحن" + " " + " لمحافظة " + " " + state_id.name + " " + " مع " + " " + courier_id.courier_name + " "
+    else:
+        result =   "لا توجد تكلفة شحن" + " " + " لمحافظة " + " " + state_id.name + " " + " مع " + " " + courier_id.courier_name + " "
+
+    data = {'result': result}
+    return JsonResponse((data))

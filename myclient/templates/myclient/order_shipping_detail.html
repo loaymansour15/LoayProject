@@ -32,24 +32,30 @@
 
     <div class="col-md-6 offset-md-3">
         <h3> <b> أضف بيانات الشحن </b> </h3>
+        <hr>
 
-        <form id="addOrderClientDetail" method="POST" action="{% url 'addOrderShippingDetail' ouid %}" dir="rtl">
+        <form method="POST" action="{% url 'addOrderShippingDetail' ouid %}" dir="rtl">
             {% csrf_token %}
             {{ form.media.js }}
             
             {{form|crispy}}
+
+            <div class="alert alert-warning" role="alert" id="showShippingCost">
+                
+            </div>
             
             <hr>
-            <button id="addClientdButton" type="submit" class="btn-success btn-lg btn-block" > إحفظ  </button>
+            <button type="submit" class="btn-outline-success btn-lg btn-block" > حفظ  </button>
         </form>
+        
         
         <hr>
         <div class="row text-center">
             <div class="col">
-                <a href="{% url 'addOrderClientDetail' ouid %}"> <button class="btn-primary btn-lg btn-block" > التالي </button> </a>
+                <a href="{% url 'addOrderClientDetail' ouid %}"> <button class="btn-outline-primary btn-lg btn-block" > بيانات العميل </button> </a>
             </div>
             <div class="col">
-                <a href="{% url 'showAllProducts' ouid %}"> <button class="btn-info btn-lg btn-block" > السابق </button> </a>
+                <a href="{% url 'showAllProducts' ouid %}"> <button class="btn-outline-info btn-lg btn-block" > جميع منتجاتي  </button> </a>
             </div>
         </div>
         <hr>

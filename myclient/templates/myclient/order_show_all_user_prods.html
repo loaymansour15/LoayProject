@@ -88,13 +88,18 @@
         <hr>
         <div class="row text-center">
             <div class="col">
-                <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-info btn-lg btn-block" > التالي </button> </a>
+                <a href="{% url 'showAllOrderProducts' ouid %}"> <button class="btn-outline-primary btn-lg btn-block" > 
+                    <i class="fa-solid fa-cart-shopping fa-beat fa-lg"> </i> 
+                     </button> </a>
+            </div>
+        </div>
+        <hr>
+        <div class="row text-center">
+            <div class="col">
+                <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-outline-info btn-lg btn-block" > بيانات الشحن </button> </a>
             </div>
             <div class="col">
-                <a href="{% url 'showAllOrderProducts' ouid %}"> <button class="btn-primary btn-lg btn-block" > جميع منتجات الطلب </button> </a>
-            </div>
-            <div class="col">
-                <a href="{% url 'deleteOrder' ouid %}"> <button class="btn-danger btn-lg btn-block" > إلغاء الطلب </button> </a>
+                <a href="{% url 'deleteOrder' ouid %}"> <button class="btn-outline-danger btn-lg btn-block" > حذف الطلب </button> </a>
             </div>
         </div>
         <hr>

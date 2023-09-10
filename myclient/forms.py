@@ -109,7 +109,7 @@ class AddProduct_Form(forms.ModelForm):
 class AddOrderClientDetail_Form(forms.ModelForm):
     class Meta:
         model = Client
-        exclude = ('user',)
+        exclude = ('order',)
         widgets = {
             'mobile1_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
             'mobile2_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
@@ -165,8 +165,11 @@ class AddOrderProductDetail_Form(forms.ModelForm):
 
 class AddOrderShippingDetail_Form(forms.ModelForm):
     class Meta:
-        model = BrandCourierPrices
-        exclude = ('user', )
+        model = OrderShippingDetail
+        exclude = ('order', )
+        widgets = {
+            'free_shipping': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
+        }
 
 
 '''
