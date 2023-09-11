@@ -292,38 +292,80 @@ def get_product_data(request):
 @login_required
 def add_order_shipping_details(request, ouid):
 
-    form = AddOrderShippingDetail_Form()
     this_order = Order.objects.filter(order_uid=ouid, user=request.user).first()
+    order_shipp_detail = OrderShippingDetail.objects.filter(order=this_order).first()
     if request.method == 'POST':
-        if this_order:
+        if this_order and not order_shipp_detail:# add for first time
             form = AddOrderShippingDetail_Form(request.POST)
             if form.is_valid():
                 cost = form.cleaned_data.get('cost')
-                print('helooooo', cost)
                 free_shipping = form.cleaned_data.get('free_shipping')
+                state = form.cleaned_data.get('state')
                 if (free_shipping and cost == 0) or (not free_shipping and cost > 0):
                     new_form = form.save(commit=False)
                     new_form.order = this_order
                     new_form.save()
+                    curr_state = State.objects.filter(name=state).first()
+                    order_client_detail = OrderClient(order=this_order, state=curr_state)
+                    order_client_detail.save()
                     messages.success(request, 'تم تسجيل بيانات الشحن بنجاح')
                 elif free_shipping and cost > 0:
                     messages.error(request, 'في حاله تكلفة الشحن المجاني يجب أن تكون تكلفة الشحن صفر')
                 elif not free_shipping and cost == 0:
                     messages.error(request, 'في حاله تكلفة الشحن الغير مجاني يجب أن تكون تكلفة الشحن أكبر من صفر')
-
+        elif this_order and order_shipp_detail:# already added before and want to edit
+            form = AddOrderShippingDetail_Form(request.POST, instance=order_shipp_detail)
+            if form.is_valid():
+                cost = form.cleaned_data.get('cost')
+                free_shipping = form.cleaned_data.get('free_shipping')
+                state = form.cleaned_data.get('state')
+                if (free_shipping and cost == 0) or (not free_shipping and cost > 0):
+                    new_form = form.save(commit=False)
+                    new_form.order = this_order
+                    new_form.save()
+                    curr_state = State.objects.filter(name=state).first()
+                    order_client_detail = OrderClient.objects.filter(order=this_order).first()
+                    order_client_detail.state = curr_state
+                    order_client_detail.save()
+                    messages.success(request, 'تم تسجيل بيانات الشحن بنجاح')
+                elif free_shipping and cost > 0:
+                    messages.error(request, 'في حاله تكلفة الشحن المجاني يجب أن تكون تكلفة الشحن صفر')
+                elif not free_shipping and cost == 0:
+                    messages.error(request, 'في حاله تكلفة الشحن الغير مجاني يجب أن تكون تكلفة الشحن أكبر من صفر')
         else:
             messages.error(request, 'هذا الطلب اصبح غير موجود')
+    else:#GET
+        if order_shipp_detail:
+            form = AddOrderShippingDetail_Form(instance=order_shipp_detail)
+        else:
+            form = AddOrderShippingDetail_Form()
 
     context = {'form':form, 'ouid':ouid}
 
     return render(request, 'order_shipping_detail.html', context)
 
-@login_required
+
 def add_order_client_details(request, ouid):
 
-    form = AddOrderClientDetail_Form()
+    this_order = Order.objects.filter(order_uid=ouid).first()
+    order_client_detail = OrderClient.objects.filter(order=this_order).first()
+    if request.method == 'POST':
+        form = AddOrderClientDetail_Form(request.POST, instance=order_client_detail)
+        form2 = AddOrderClientDetail_State_Form(instance=order_client_detail)
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.state = order_client_detail.state
+            new_form.save()
+            messages.success(request, 'تم تسجيل بيانات العميل بنجاح')
+    else:#GET
+        if order_client_detail:
+            form = AddOrderClientDetail_Form(instance=order_client_detail)
+            form2 = AddOrderClientDetail_State_Form(instance=order_client_detail)
+        else:
+            form = AddOrderClientDetail_Form()
+            form2 = AddOrderClientDetail_State_Form()
     
-    context = {'form':form, 'ouid':ouid}
+    context = {'form':form, 'ouid':ouid, 'form2': form2}
 
     return render(request, 'order_client_detail.html', context)
 
@@ -340,6 +382,12 @@ def delete_order(request, ouid):
 
     return redirect('startOrder')
 
+
+@login_required
+def all_orders(request):
+    orders = Order.objects.filter(user=request.user).all()
+    context = {'orders': orders, 'link':'showAllProducts'}
+    return render(request, 'all_orders.html', context)
 
 #ajax
 @login_required

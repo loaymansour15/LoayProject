@@ -106,15 +106,25 @@ class AddProduct_Form(forms.ModelForm):
         exclude = ('user',)
 
 
+class AddOrderClientDetail_State_Form(forms.ModelForm):
+    class Meta:
+        model = OrderClient
+        fields = ('state',)
+        
+    def __init__(self, *args, **kwargs):
+        super(AddOrderClientDetail_State_Form, self).__init__(*args, **kwargs)
+        self.fields['state'].widget.attrs['disabled'] = True
+
 class AddOrderClientDetail_Form(forms.ModelForm):
     class Meta:
-        model = Client
-        exclude = ('order',)
+        model = OrderClient
+        exclude = ('order', 'state')
         widgets = {
             'mobile1_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
             'mobile2_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
 
         }
+
     def clean(self):
         self.cleaned_data = super(AddOrderClientDetail_Form, self).clean()
         mobile1 = self.cleaned_data['mobile1']

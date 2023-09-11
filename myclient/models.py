@@ -202,7 +202,7 @@ class OrderProduct(models.Model):
     def __str__(self):
         return self.order.order_uid
 
-class Client(models.Model):
+class OrderClient(models.Model):
     order = models.ForeignKey("Order", on_delete=models.CASCADE, null=True)
     client_name = models.CharField(max_length=100, verbose_name="إسم العميل ")
     mobile1 = models.CharField(max_length=11, verbose_name="موبايل 1", blank=False, null=True)

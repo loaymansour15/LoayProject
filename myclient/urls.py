@@ -32,6 +32,9 @@ urlpatterns = [
     path('add_product/', views.add_product, name='addProduct'),
     path('add_product_setting/', views.add_product_setting, name='addProductSetting'),
 
+    #all orders
+    path('all_orders/', views.all_orders, name="allOrders"),
+
     #add order
     path('start_order/', views.start_order, name="startOrder"),
     path('show_all_products/<str:ouid>/', views.show_all_products, name='showAllProducts'),

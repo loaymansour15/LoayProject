@@ -261,6 +261,10 @@ function showloading(){
     $('#loading').show();
 }
 
+function copy() {
+    navigator.clipboard.writeText(window.location.href);
+}
+
 // delete a row from table
 function deleteTableRow(id){
 

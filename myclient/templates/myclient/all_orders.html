@@ -1,0 +1,90 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page">  جميع الطلبات  </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-10 offset-md-1 text-center">
+        <h1> <b> جميع الطلبات </b> </h1>
+        <hr><br>
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-10 offset-md-1">
+
+        <div class="row" dir="rtl">
+        
+
+            <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
+              {% if orders %}
+                <table class="table table-striped" style="max-width: none;">
+                    <thead>
+                        <tr>
+                          <th> رقم الطلب </th>
+                          <th> تكلفة الطلب قبل الشحن </th>
+                          <th> تكلفة الطلب بعد الشحن  </th>
+                          <th> تاريخ الطلب </th>
+                          <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for o in orders %}
+                          <tr onclick="window.location='{% url link o.order_uid %}';" style="cursor: default;">
+    
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;">
+                                <span class="badge badge-pill badge-info">
+                                    {{o.order_uid}} 
+                                </span>
+                            </td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{o.total_order_before_shipp}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{o.total_order_after_shipp}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{o.date_created}} </b></td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> 
+                                <div class="row text-center">
+                                    <div class="col">
+                                        <a href="{% url 'deleteOrder' o.order_uid %}"> <button class="btn-danger btn-sm btn-block" > حذف </button> </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="{% url link o.order_uid %}"> <button class="btn-primary btn-sm btn-block" > تعديل </button> </a>
+                                    </div>
+                                </div>
+                                
+                                
+                            </b></td>
+                            
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                  <h3 class="text-center" style="margin-top: 50px;"><b>لا يوجد طلبات </b></h3>
+                {% endif %}
+            </div>
+    
+        </div>
+       
+    </div>    
+
+</div>
+
+
+{% endblock content %}
