@@ -23,7 +23,7 @@
 <div class="row text-center">
 
     <div class="col-md-10 offset-md-1 text-center">
-        <h1> <b> أضف طلب جديد </b> </h1>
+        <h1> <b> بيانات الطلب </b> </h1>
         <hr><br>
     </div>
 </div>
@@ -31,7 +31,7 @@
 <div class="row text-center" >
 
     <div class="col-md-10 offset-md-1">
-        <h3> <b>  جميع منتجاتي </b> </h3>
+        <h3> <b>  أضف منتج إلي السلة</b> </h3>
 
         <div class="row" dir="rtl">
         
@@ -56,7 +56,7 @@
                     </thead>
                     <tbody>
                         {% for p in products %}
-                          <tr onclick="window.location='{% url link ouid p.id %}';" style="cursor: default;">
+                          <tr onclick="window.location='{% url link ouid p.id %}';" style="cursor:pointer;">
     
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.category}} </b></td>
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.name}} </b></td>
@@ -92,14 +92,13 @@
                     <i class="fa-solid fa-cart-shopping fa-beat fa-lg"> </i> 
                      </button> </a>
             </div>
-        </div>
-        <hr>
-        <div class="row text-center">
             <div class="col">
                 <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-outline-info btn-lg btn-block" > بيانات الشحن </button> </a>
             </div>
             <div class="col">
-                <a href="{% url 'deleteOrder' ouid %}"> <button class="btn-outline-danger btn-lg btn-block" > حذف الطلب </button> </a>
+                <a href="{% url 'deleteOrder' ouid %}"> <button class="btn-outline-danger btn-lg btn-block" >
+                    <i class="fa-solid fa-trash fa-beat fa-lg"></i>
+                </button> </a>
             </div>
         </div>
         <hr>

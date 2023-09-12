@@ -23,7 +23,7 @@
 <div class="row text-center">
 
     <div class="col-md-10 offset-md-1 text-center">
-        <h1> <b> أضف طلب جديد </b> </h1>
+        <h1> <b> بيانات الطلب  </b> </h1>
         <hr><br>
     </div>
 </div>
@@ -58,7 +58,7 @@
                     </thead>
                     <tbody>
                         {% for p in products %}
-                          <tr onclick="window.location='{% url link ouid p.id %}';" style="cursor: default;">
+                          <tr onclick="window.location='{% url link ouid p.product.id %}';" style="cursor: pointer;">
     
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.category}} </b></td>
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.product.name}} </b></td>
@@ -78,10 +78,10 @@
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> 
                                 <div class="row text-center">
                                     <div class="col">
-                                        <a href=""> <button class="btn-danger btn-sm btn-block" > حذف </button> </a>
+                                        <a href=""> <button class="btn-primary btn-sm btn-block" > <i class="fa-solid fa-pen-to-square fa-beat"></i> </button> </a>
                                     </div>
                                     <div class="col">
-                                        <a href=""> <button class="btn-primary btn-sm btn-block" > تعديل </button> </a>
+                                        <a href=""> <button class="btn-danger btn-sm btn-block" > <i class="fa-solid fa-trash fa-beat"></i> </button> </a>
                                     </div>
                                 </div>
                                 
@@ -102,10 +102,10 @@
         <hr>
         <div class="row text-center">
             <div class="col">
-                <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-outline-info btn-lg btn-block" > بيانات الشحن </button> </a>
+                <a href="{% url 'showAllProducts' ouid %}"> <button class="btn-outline-primary btn-lg btn-block" > جميع منتجاتي </button> </a>
             </div>
             <div class="col">
-                <a href="{% url 'showAllProducts' ouid %}"> <button class="btn-outline-primary btn-lg btn-block" > جميع منتجاتي </button> </a>
+                <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-outline-info btn-lg btn-block" > بيانات الشحن </button> </a>
             </div>
         </div>
         <hr>
