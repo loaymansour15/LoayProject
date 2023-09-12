@@ -418,7 +418,7 @@ def delete_order(request, ouid):
     else:
         messages.error(request, 'هناك خطأ أثناء إلغاء الطلب')
 
-    return redirect('startOrder')
+    return redirect('allOrders')
 
 
 @login_required
