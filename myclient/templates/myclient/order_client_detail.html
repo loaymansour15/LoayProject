@@ -51,13 +51,15 @@
             {{form2|crispy}}
             
             <hr>
-            <button type="submit" class="btn-outline-success btn-lg btn-block" > <i class="fa-solid fa-floppy-disk fa-beat fa-lg"></i>  </button>
+            {% if not is_saved %}
+                <button type="submit" class="btn-outline-success btn-lg btn-block" > <i class="fa-solid fa-floppy-disk fa-beat fa-lg"></i>  </button>
+            {% endif %}
         </form>
         <hr>
         
         <div class="row text-center">
             <div class="col">
-                <a href=""> <button class="btn-outline-primary btn-lg btn-block" > مراجعه الطلب </button> </a>
+                <a href="{% url 'reviseOrder' ouid %}"> <button class="btn-outline-primary btn-lg btn-block" > مراجعه الطلب </button> </a>
             </div>
             <div class="col">
                 <a href="{% url 'addOrderShippingDetail' ouid %}"> <button class="btn-outline-info btn-lg btn-block" > بيانات الشحن </button> </a>

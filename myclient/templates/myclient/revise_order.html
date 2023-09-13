@@ -1,0 +1,136 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'allOrders' %}"> جميع الطلبات  </a></li>
+              <li class="breadcrumb-item active" aria-current="page"> أضف طلب </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3 text-center">
+        <h1> <b>#{{ouid}} طلب رقم  </b> </h1>
+        <hr><br>
+    </div>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-1 offset-md-3 text-center">
+        <button id="cmd" class="btn-outline-dark btn-lg btn-block">  <i class="fa-solid fa-print fa-lg"></i> </button>
+    </div>
+    <div class="col-md-6">
+
+    </div>
+</div>
+
+<div class="row text-center" >
+
+    <div class="col-md-6 offset-md-3">
+        <h3> <b> مراجعة الطلب </b> </h3>
+
+        <div id="content">
+            <div class="row text-right">
+                <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
+                    <table class="table table-striped" style="max-width: none;">
+                        <tbody>
+                            <tr style="cursor:pointer;"></tr>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>   الإسم /</b>  {{client.client_name}}</td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>  رقم موبايل 1  /</b> {{client.mobile1}} </td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>  رقم موبايل 2  /</b> {{client.mobile2}} </td>  
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row text-right">
+                <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
+                    <table class="table table-striped" style="max-width: none;">
+                        <tbody>
+                            <tr style="cursor:pointer;"></tr>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> المحافظة  /</b>  {{client.state}}</td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> العنوان تفصيلي  /</b> {{client.address}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row text-right">
+                <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
+                    <table class="table table-striped" style="max-width: none;">
+                        <thead>
+                            <tr>
+                              <th>الفئة</th>
+                              <th>إسم المنتج</th>
+                              <th>الوحدة</th>
+                              <th>السعر </th>
+                              <th>الكمية </th>
+                              <th>الإجمالي </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if products %}
+                            {% for p in products %}
+                            <tr style="cursor:pointer;"></tr>
+                                <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>  {{p.category}} </b> </td>
+                                <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.product.name}}  </b> </td>
+                                <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.unit}} </b> </td>
+                                <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.price}} </b> </td>
+                                <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.quantity_t}} </b> </td>
+                                <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {% widthratio p.price 1 p.quantity_t %} </b> </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                                <h4 class="text-center" style="margin-top: 50px;"><b>لم يتم إضافة اي منتجات </b></h4>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+        </div>
+        <br>
+        <hr>
+        <form method="POST" action="" dir="rtl">
+            {% csrf_token %}
+            
+            {{form|crispy}}
+            
+            <hr>
+            {% if not is_saved %}
+                <button type="submit" class="btn-outline-success btn-lg btn-block" > تأكيد الطلب  </button>
+            {% endif %}
+        </form>
+        <hr>
+        
+        <div class="row text-center">
+            {% if user.is_authenticated %}
+                <div class="col">
+                    <a href="{% url 'showAllProducts' ouid %}"> <button class="btn-outline-info btn-lg btn-block" > <i class="fa-solid fa-house fa-lg"></i> </button> </a>
+                </div>
+            {% endif %}
+            
+        </div>
+        <hr>
+        
+    </div>    
+
+</div>
+
+
+{% endblock content %}

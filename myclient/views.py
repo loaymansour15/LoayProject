@@ -382,6 +382,10 @@ def add_order_client_details(request, ouid):
 
     this_order = Order.objects.filter(order_uid=ouid).first()
     order_client_detail = OrderClient.objects.filter(order=this_order).first()
+    if order_client_detail:
+        is_saved = order_client_detail.is_saved
+    else:
+        is_saved = False
     if request.method == 'POST':
         if not order_client_detail:
             form = AddOrderClientDetail_Form(request.POST)
@@ -402,10 +406,24 @@ def add_order_client_details(request, ouid):
         else:
             form = AddOrderClientDetail_Form()
             form2 = AddOrderClientDetail_State_Form()
+
     
-    context = {'form':form, 'ouid':ouid, 'form2': form2}
+    context = {'form':form, 'ouid':ouid, 'form2': form2, 'is_saved': is_saved}
 
     return render(request, 'order_client_detail.html', context)
+
+
+def revise_order(request, ouid):
+
+    this_order = Order.objects.filter(order_uid=ouid).first()
+    order_client = OrderClient.objects.filter(order=this_order).first()
+    order_prods = OrderProduct.objects.filter(order=this_order).all()
+    if request.method == 'POST':
+        pass
+    else:#GET
+        form = ConfirmOrder_Form()
+    context = {'form': form, 'ouid': ouid, 'order':this_order, 'client':order_client, 'products': order_prods}
+    return render(request, 'revise_order.html', context)
 
 @login_required
 def delete_order(request, ouid):

@@ -61,14 +61,15 @@
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> 
                                 <div class="row text-center">
                                     <div class="col">
-                                        <a href="{% url link o.order_uid %}"> <button class="btn-primary btn-sm btn-block" > <i class="fa-solid fa-pen-to-square"></i> </button> </a>
+                                        <a href=""> <button class="btn-outline-secondary btn-sm btn-block" > <i class="fa-solid fa-gear"></i> </button> </a>
                                     </div>
                                     <div class="col">
-                                        <a href="{% url 'deleteOrder' o.order_uid %}"> <button class="btn-danger btn-sm btn-block" > <i class="fa-solid fa-trash"></i> </button> </a>
+                                        <a href="{% url link o.order_uid %}"> <button class="btn-outline-primary btn-sm btn-block" > <i class="fa-solid fa-pen-to-square"></i> </button> </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="{% url 'deleteOrder' o.order_uid %}"> <button class="btn-outline-danger btn-sm btn-block" > <i class="fa-solid fa-trash"></i> </button> </a>
                                     </div>
                                 </div>
-                                
-                                
                             </b></td>
                             
                           </tr>

@@ -41,7 +41,8 @@ urlpatterns = [
     path('show_all_order_products/<str:ouid>/', views.show_all_order_products, name='showAllOrderProducts'),
     path('add_order_product_detail/<str:ouid>/<int:id>', views.add_order_product_details, name='addOrderProductDetail'),
     path('add_order_shipping_detail/<str:ouid>/', views.add_order_shipping_details, name='addOrderShippingDetail'),
-    path('add_order_client_detail//<str:ouid>/', views.add_order_client_details, name='addOrderClientDetail'),
+    path('add_order_client_detail/<str:ouid>/', views.add_order_client_details, name='addOrderClientDetail'),
+    path('revise_order/<str:ouid>/', views.revise_order, name='reviseOrder'),
     path('deleteOrder/<str:ouid>/', views.delete_order, name='deleteOrder'),
 
     #ajax urls

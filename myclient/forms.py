@@ -118,7 +118,7 @@ class AddOrderClientDetail_State_Form(forms.ModelForm):
 class AddOrderClientDetail_Form(forms.ModelForm):
     class Meta:
         model = OrderClient
-        exclude = ('order', 'state')
+        exclude = ('order', 'state', 'is_saved',)
         widgets = {
             'mobile1_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
             'mobile2_has_whatsapp': forms.CheckboxInput(attrs={ 'style':'margin-right: 80px;'}),
@@ -150,6 +150,11 @@ class AddOrderClientDetail_Form(forms.ModelForm):
             self.cleaned_data['mobile2'] = check_arabic_no(mobile2)
         
         return self.cleaned_data
+
+
+class ConfirmOrder_Form(forms.Form):
+    consent = forms.CharField(label='أوافق علي سياسة الشحن والإسترجاع', max_length=150, required=True, widget=forms.CheckboxInput(attrs={ 'style':'margin-right: -20px;'}))
+
 
 '''
 class FindOrderProductDetail_Form(forms.ModelForm):

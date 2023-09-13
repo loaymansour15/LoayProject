@@ -162,7 +162,11 @@ class Order(models.Model):
     order_uid = models.CharField(max_length=500, verbose_name="رقم الأوردر ", unique=True)
     total_order_before_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب قبل الشحن", null=True)
     total_order_after_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب شامل الشحن", null=True)
-
+    class ORDER_STATES(models.TextChoices):
+        DRAFT='مسوده'
+        PENDING='قيد التحقق'
+        CONFIRMED='تم التأكيد'
+    order_state = models.CharField(max_length=150, choices=ORDER_STATES.choices, default=ORDER_STATES.DRAFT)
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
 
@@ -211,6 +215,7 @@ class OrderClient(models.Model):
     mobile2_has_whatsapp = models.BooleanField(default=False, verbose_name=" واتس اب ؟")
     address = models.CharField(max_length=200, verbose_name="العنوان تفصيلي  ")
     state = models.ForeignKey(State, on_delete=models.CASCADE, verbose_name="المحافظة", blank=False, null=True)
+    is_saved = models.BooleanField(default=False, verbose_name=" غير مسموح بتعديل بيانات العميل؟ ")
     
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
