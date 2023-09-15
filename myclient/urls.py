@@ -24,6 +24,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.home, name='homeURL'),
 
+    path('shipping_policy', views.shipping_policy, name="shippingPolicy"),
+
     #authentication
     path('login/', views.login_view, name='loginURL'),
     path('logout/', MyLogoutView.as_view(), name='logout'),
@@ -44,6 +46,7 @@ urlpatterns = [
     path('add_order_client_detail/<str:ouid>/', views.add_order_client_details, name='addOrderClientDetail'),
     path('revise_order/<str:ouid>/', views.revise_order, name='reviseOrder'),
     path('deleteOrder/<str:ouid>/', views.delete_order, name='deleteOrder'),
+    path('order_confirmed/<str:ouid>/', views.confrim_order, name='orderConfirm'),
 
     #ajax urls
     path('get_product_data/', views.get_product_data, name='getProductData'),

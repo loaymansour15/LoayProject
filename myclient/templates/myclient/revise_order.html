@@ -41,13 +41,15 @@
 
     <div class="col-md-6 offset-md-3">
         <h3> <b> مراجعة الطلب </b> </h3>
+        <hr>
 
         <div id="content">
+            <!-- name and mobile -->
             <div class="row text-right">
                 <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
                     <table class="table table-striped" style="max-width: none;">
                         <tbody>
-                            <tr style="cursor:pointer;"></tr>
+                            <tr style="cursor:pointer;">
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>   الإسم /</b>  {{client.client_name}}</td>
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>  رقم موبايل 1  /</b> {{client.mobile1}} </td>
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>  رقم موبايل 2  /</b> {{client.mobile2}} </td>  
@@ -57,11 +59,12 @@
                 </div>
             </div>
 
+            <!-- address -->
             <div class="row text-right">
                 <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
                     <table class="table table-striped" style="max-width: none;">
                         <tbody>
-                            <tr style="cursor:pointer;"></tr>
+                            <tr style="cursor:pointer;">
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> المحافظة  /</b>  {{client.state}}</td>
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> العنوان تفصيلي  /</b> {{client.address}} </td>
                             </tr>
@@ -70,6 +73,7 @@
                 </div>
             </div>
 
+            <!--  products -->
             <div class="row text-right">
                 <div class="col text-right" dir="rtl" style="overflow-x: scroll;">
                     <table class="table table-striped" style="max-width: none;">
@@ -86,7 +90,7 @@
                         <tbody>
                             {% if products %}
                             {% for p in products %}
-                            <tr style="cursor:pointer;"></tr>
+                            <tr style="cursor:pointer;">
                                 <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b>  {{p.category}} </b> </td>
                                 <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.product.name}}  </b> </td>
                                 <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.unit}} </b> </td>
@@ -96,26 +100,64 @@
                             </tr>
                             {% endfor %}
                             {% else %}
-                                <h4 class="text-center" style="margin-top: 50px;"><b>لم يتم إضافة اي منتجات </b></h4>
+                                <tr>
+                                    <td>  </td>
+                                    <td class="align-middle" style="max-width: 100%; white-space: nowrap;"> <b>لم يتم إضافة اي منتجات </b> </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                
                             {% endif %}
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- totals -->
+            <div class="row text-right">
+                <div class="col">
+                    <hr>
+                    <h6> <b> الإجمالي قبل الشحن  :</b> <b> {{totals.0}} </b> <b> جم  </b> </h6>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row text-right">
+                <div class="col">
+                    {% if shipping.free_shipping %}
+                        <h6> <b> الشحن مجاني </b> </h6>
+                    {% else %}
+                        <h6> <b> تكلفة الشحن  :</b> <b> {{shipping.cost}} </b> <b> جم  </b> </h6>
+                    {% endif %}
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row text-right">
+                <div class="col">
+                    <h5> <b>إجمالي الطلب شامل الشحن  :</b> <b> {{totals.1}} </b> <b> جم  </b> </h5>
+                    <hr>
+                </div>
+            </div>
         
         </div>
         <br>
-        <hr>
-        <form method="POST" action="" dir="rtl">
-            {% csrf_token %}
-            
-            {{form|crispy}}
-            
-            <hr>
-            {% if not is_saved %}
-                <button type="submit" class="btn-outline-success btn-lg btn-block" > تأكيد الطلب  </button>
-            {% endif %}
-        </form>
+        
+        {% if not is_confirmed %}
+            <form method="POST" action="" dir="rtl">
+                {% csrf_token %}
+                
+                
+                <a href="{% url 'shippingPolicy' %}" target="_blank"> أوافق علي سياسة الشحن والإسترجاع * </a> {{ form.consent }}
+                
+                <hr>
+                
+                    <button type="submit" class="btn-outline-success btn-lg btn-block" > تأكيد الطلب  </button>
+                
+            </form>
+        {% endif %}
         <hr>
         
         <div class="row text-center">

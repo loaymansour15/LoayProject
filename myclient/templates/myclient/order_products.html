@@ -42,18 +42,20 @@
                 <table class="table table-striped" style="max-width: none;">
                     <thead>
                         <tr>
-                          <th>إسم الفئة</th>
-                          <th>إسم المنتج</th>
-                          <th>الوحدة </th>
-                          <th>الكمية </th>
-                          <th>التكلفة </th>
-                          <th>السعر </th>
-                          <th>الخصم </th>
-                          <th>نوع المتغير الأول </th>
-                          <th>إسم المتغير الأول </th>
-                          <th>نوع المتغير الثاني </th>
-                          <th>إسم المتغير الثاني </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">إسم الفئة</th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">إسم المنتج</th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">الوحدة </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">الكمية </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">التكلفة </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">السعر </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">الخصم </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">نوع المتغير الأول </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">إسم المتغير الأول </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">نوع المتغير الثاني </th>
+                          <th class="align-middle" style="max-width: 100%; white-space: nowrap;">إسم المتغير الثاني </th>
                           <th> </th>
+                          <th> </th>
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -75,18 +77,20 @@
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.variant_option1}} </b></td>
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.variant2}} </b></td>
                             <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> {{p.variant_option2}} </b></td>
-                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;"><b> 
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;">
                                 <div class="row text-center">
                                     <div class="col">
-                                        <a href=""> <button class="btn-primary btn-sm btn-block" > <i class="fa-solid fa-pen-to-square"></i> </button> </a>
+                                        <a href="{% url link ouid p.product.id %}"> <button class="btn-primary btn-sm btn-block" > <i class="fa-solid fa-pen-to-square"></i> </button> </a>
                                     </div>
+                                </div>
+                            </td>
+                            <td class="align-middle" style="max-width: 100%; white-space: nowrap;">
+                                <div class="row text-center">
                                     <div class="col">
                                         <a href=""> <button class="btn-danger btn-sm btn-block" > <i class="fa-solid fa-trash"></i> </button> </a>
                                     </div>
                                 </div>
-                                
-                                
-                            </b></td>
+                            </td>
                             
                           </tr>
                         {% endfor %}

@@ -1,0 +1,50 @@
+{% extends "app.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item ml-auto"><a href="{% url 'homeURL' %}">الرئيسية</a></li>
+              {% if user.is_authenticated %}
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'allOrders' %}"> جميع الطلبات  </a></li>
+              {% endif %}
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3">
+        <h1 style="font-size: 100px;"> <i class="fa-solid fa-circle-check fa-2xl" style="color: #1ca645;"></i> </h1>
+    </div>    
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<div class="row text-center">
+
+    <div class="col-md-6 offset-md-3" dir="rtl">
+        
+        <h2> <b> تم تأكيد الطلب رقم <b style="color:crimson;" dir="ltr"> &nbsp; #{{ouid}} &nbsp;</b>  بنجاح  </b> </h2>
+    </div>    
+
+</div>
+
+
+{% endblock content %}

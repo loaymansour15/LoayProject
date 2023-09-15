@@ -27,6 +27,8 @@ from datetime import date, datetime, timezone
 
 # Create your views here.
 
+def shipping_policy(request):
+    return render(request, 'shipping_policy.html')
 
 # Login / Logout / Register / Other functions related to login to user authentication
 
@@ -418,12 +420,43 @@ def revise_order(request, ouid):
     this_order = Order.objects.filter(order_uid=ouid).first()
     order_client = OrderClient.objects.filter(order=this_order).first()
     order_prods = OrderProduct.objects.filter(order=this_order).all()
+    order_shipping = OrderShippingDetail.objects.filter(order=this_order).first()
+
+    total_before_ship = 0
+    for p in order_prods:
+        total = p.price * p.quantity_t
+        total_before_ship = total_before_ship + total
+    
+    total_shipp = 0
+    if order_shipping and not order_shipping.free_shipping:
+        total_shipp = order_shipping.cost
+
+    total_order = total_before_ship + total_shipp
+
+    totals = (total_before_ship, total_order)
+
+    is_confirmed = True
+    if this_order.order_state == ORDER_STATES.DRAFT:
+        is_confirmed = False
+
     if request.method == 'POST':
-        pass
+        form = ConfirmOrder_Form(request.POST)
+        if this_order and order_client and order_prods and order_shipping:
+            if form.is_valid():
+                this_order.order_state = ORDER_STATES.PENDING
+                this_order.save()
+                return redirect('orderConfirm', ouid=ouid)
+        else:
+            messages.error(request, 'بيانات الطلب غير مكتمله')
     else:#GET
         form = ConfirmOrder_Form()
-    context = {'form': form, 'ouid': ouid, 'order':this_order, 'client':order_client, 'products': order_prods}
+
+    context = {'form': form, 'ouid': ouid, 'order':this_order, 'client':order_client, 'products': order_prods, 'is_confirmed': is_confirmed, 'shipping': order_shipping, 'totals': totals}
     return render(request, 'revise_order.html', context)
+
+
+def confrim_order(request, ouid):
+    return render(request, 'order_confirm.html', {'ouid':ouid})
 
 @login_required
 def delete_order(request, ouid):

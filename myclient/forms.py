@@ -153,7 +153,7 @@ class AddOrderClientDetail_Form(forms.ModelForm):
 
 
 class ConfirmOrder_Form(forms.Form):
-    consent = forms.CharField(label='أوافق علي سياسة الشحن والإسترجاع', max_length=150, required=True, widget=forms.CheckboxInput(attrs={ 'style':'margin-right: -20px;'}))
+    consent = forms.CharField(label="", max_length=150, required=True, widget=forms.CheckboxInput(attrs={ 'style':'margin-right: 0px;'}))
 
 
 '''

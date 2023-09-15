@@ -157,15 +157,16 @@ class Product(models.Model):
         return self.name
 
 
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_uid = models.CharField(max_length=500, verbose_name="رقم الأوردر ", unique=True)
-    total_order_before_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب قبل الشحن", null=True)
-    total_order_after_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب شامل الشحن", null=True)
-    class ORDER_STATES(models.TextChoices):
+class ORDER_STATES(models.TextChoices):
         DRAFT='مسوده'
         PENDING='قيد التحقق'
         CONFIRMED='تم التأكيد'
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_uid = models.CharField(max_length=500, verbose_name="رقم الأوردر ", unique=True)
+    total_order_before_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب قبل الشحن", null=True, default=0)
+    total_order_after_shipp = models.CharField(max_length=500, verbose_name="إجمالي الطلب شامل الشحن", null=True, default=0)
     order_state = models.CharField(max_length=150, choices=ORDER_STATES.choices, default=ORDER_STATES.DRAFT)
     date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاريخ الإنشاء")
     date_modified = models.DateTimeField(auto_now=True, verbose_name="تاريخ التعديل")
